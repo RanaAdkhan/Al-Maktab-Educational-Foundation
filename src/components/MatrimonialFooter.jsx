@@ -4,18 +4,25 @@ import { siteConfig, ADMIN_PHONE } from '../data/matrimonialData';
 
 export default function MatrimonialFooter() {
   return (
-    <footer className="bg-slate-900 text-slate-400 pt-12 pb-8 border-t border-slate-800 text-right text-xs">
+    <footer className="bg-slate-950 text-slate-400 pt-12 pb-8 border-t border-slate-800 text-right text-xs">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
           
           {/* Brand */}
           <div className="space-y-3">
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-xl bg-rose-600 flex items-center justify-center text-white">
-                <Heart className="w-4 h-4 fill-white text-rose-600" />
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-white rounded-xl p-0.5 overflow-hidden border border-amber-400/40 shrink-0">
+                <img
+                  src="./logo.png"
+                  alt="Al-Maktab Logo"
+                  className="w-full h-full object-contain"
+                />
               </div>
-              <span className="text-lg font-black text-white">{siteConfig.title}</span>
+              <div>
+                <span className="text-base font-black text-amber-400 block">{siteConfig.title}</span>
+                <span className="text-[11px] text-slate-400">{siteConfig.subBrand}</span>
+              </div>
             </div>
             <p className="text-slate-400 text-xs leading-relaxed max-w-sm">
               پاکستان اور اوورسیز خاندانوں کے لیے محفوظ، باوقار اور 100% تصدیق شدہ رشتے فراہم کرنے والا معروف پلیٹ فارم۔
@@ -27,7 +34,7 @@ export default function MatrimonialFooter() {
             <h4 className="text-white font-bold text-sm mb-3">رابطہ اور ہیلپ لائن</h4>
             <div className="space-y-2 text-xs">
               <p className="flex items-center gap-2">
-                <Phone className="w-4 h-4 text-rose-400 shrink-0" />
+                <Phone className="w-4 h-4 text-amber-400 shrink-0" />
                 <span>فون: {siteConfig.phone}</span>
               </p>
               <p className="flex items-center gap-2">
@@ -35,7 +42,7 @@ export default function MatrimonialFooter() {
                 <span>واٹس ایپ: +{ADMIN_PHONE}</span>
               </p>
               <p className="flex items-center gap-2">
-                <MapPin className="w-4 h-4 text-rose-400 shrink-0" />
+                <MapPin className="w-4 h-4 text-amber-400 shrink-0" />
                 <span>لاہور، راولپنڈی، اسلام آباد، کراچی و دیگر شہر</span>
               </p>
             </div>
@@ -55,7 +62,7 @@ export default function MatrimonialFooter() {
         <div className="pt-6 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-right">
           <p>© 2026 {siteConfig.title} — تمام جملہ حقوق محفوظ ہیں۔</p>
           <p className="flex items-center gap-1 text-slate-500">
-            خاندانی وقار اور بااعتماد نکاح کا ترجمان <Heart className="w-3.5 h-3.5 text-rose-500 fill-rose-500" />
+            خاندانی وقار اور بااعتماد نکاح کا ترجمان <Heart className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />
           </p>
         </div>
 

@@ -1,12 +1,13 @@
 export const ADMIN_PHONE = "923001234567";
 
 export const siteConfig = {
-  title: "ہم سفر رشتہ سنٹر",
-  subtitle: "بااعتماد اور باوقار رشتوں کا مرکز",
+  title: "المکتب ایجوکیشنل فاؤنڈیشن",
+  subBrand: "ہم سفر رشتہ و ازدواجی سنٹر",
+  subtitle: "بااعتماد تعلیمی و باوقار سماجی خدمات",
   tagline: "اپنی پسند اور خاندانی وقار کے عین مطابق رشتہ تلاش کریں",
   phone: "+92 300 1234567",
   whatsapp: "923001234567",
-  email: "contact@humsafar-rishta.pk",
+  email: "info@almaktabfoundation.org",
   address: "لاہور، اسلام آباد، کراچی و تمام بڑے شہر",
   activeMatches: "10,500+",
   successfulWeddings: "3,200+",
