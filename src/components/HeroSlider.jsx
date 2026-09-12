@@ -58,10 +58,10 @@ export default function HeroSlider({ onOpenRegister, lang, t }) {
   };
 
   return (
-    <div className="relative max-w-5xl mx-auto rounded-3xl overflow-hidden shadow-2xl border-2 border-amber-500/50 bg-slate-900 my-4 select-none">
+    <div className="relative max-w-5xl mx-auto rounded-2xl sm:rounded-3xl overflow-hidden shadow-xl border-2 border-amber-500/50 bg-slate-900 my-3 sm:my-4 select-none">
       
       {/* Slides Container */}
-      <div className="relative min-h-[300px] sm:min-h-[360px] md:min-h-[400px] flex items-center justify-center">
+      <div className="relative min-h-[220px] sm:min-h-[340px] md:min-h-[380px] flex items-center justify-center">
         
         {slides.map((slide, idx) => {
           const isActive = idx === currentSlide;
@@ -70,11 +70,11 @@ export default function HeroSlider({ onOpenRegister, lang, t }) {
 
           if (slide.type === 'image_banner') {
             return (
-              <div key={slide.id} className="w-full h-full animate-in fade-in duration-700 flex items-center justify-center bg-white">
+              <div key={slide.id} className="w-full h-full animate-in fade-in duration-500 flex items-center justify-center bg-white p-1 sm:p-2">
                 <img
                   src={slide.image}
                   alt={slide.alt}
-                  className="w-full h-auto max-h-[460px] object-contain mx-auto"
+                  className="w-full h-auto max-h-[280px] sm:max-h-[380px] md:max-h-[440px] object-contain mx-auto"
                 />
               </div>
             );
@@ -84,70 +84,70 @@ export default function HeroSlider({ onOpenRegister, lang, t }) {
           return (
             <div
               key={slide.id}
-              className={`w-full h-full min-h-[340px] sm:min-h-[380px] p-6 sm:p-10 flex flex-col justify-between text-white text-center bg-gradient-to-br ${slide.bgGradient} animate-in fade-in duration-700 relative overflow-hidden`}
+              className={`w-full h-full min-h-[240px] sm:min-h-[340px] p-4 sm:p-8 flex flex-col justify-between text-white text-center bg-gradient-to-br ${slide.bgGradient} animate-in fade-in duration-500 relative overflow-hidden`}
             >
               {/* Background ambient lighting */}
-              <div className="absolute top-0 right-0 w-80 h-80 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
-              <div className="absolute bottom-0 left-0 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
+              <div className="absolute top-0 right-0 w-60 h-60 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
+              <div className="absolute bottom-0 left-0 w-60 h-60 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
 
               {/* Top Header inside slide */}
-              <div className="flex items-center justify-between border-b border-white/15 pb-3">
-                <div className="flex items-center gap-2">
-                  <div className="w-10 h-10 bg-white rounded-xl p-0.5 overflow-hidden border border-amber-400">
+              <div className="flex items-center justify-between border-b border-white/15 pb-2">
+                <div className="flex items-center gap-1.5 sm:gap-2">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 bg-white rounded-lg sm:rounded-xl p-0.5 overflow-hidden border border-amber-400 shrink-0">
                     <img src="./logo.png" alt="Logo" className="w-full h-full object-contain" />
                   </div>
                   <div className={isUrdu ? 'text-right' : 'text-left'}>
-                    <span className="text-[10px] sm:text-xs text-amber-300 font-semibold block leading-tight">
+                    <span className="text-[9px] sm:text-xs text-amber-300 font-semibold block leading-tight">
                       {t.parentOrg}
                     </span>
-                    <span className="text-sm sm:text-base font-black text-white">
+                    <span className="text-xs sm:text-sm font-black text-white">
                       {t.title}
                     </span>
                   </div>
                 </div>
 
-                <span className="bg-amber-500/20 text-amber-300 border border-amber-400/40 text-[10px] sm:text-xs font-bold px-3 py-1 rounded-full">
+                <span className="bg-amber-500/20 text-amber-300 border border-amber-400/40 text-[9px] sm:text-xs font-bold px-2 sm:px-3 py-0.5 rounded-full">
                   {slide.tag}
                 </span>
               </div>
 
               {/* Center Content */}
-              <div className="my-auto py-6 space-y-3">
-                <h3 className="text-xl sm:text-3xl md:text-4xl font-black text-amber-400 leading-relaxed drop-shadow-md">
+              <div className="my-auto py-3 sm:py-6 space-y-1.5 sm:space-y-3">
+                <h3 className="text-base sm:text-2xl md:text-3xl font-black text-amber-400 leading-snug drop-shadow-md">
                   {slide.title}
                 </h3>
-                <p className="text-xs sm:text-base text-slate-200 font-medium max-w-2xl mx-auto leading-relaxed">
+                <p className="text-[11px] sm:text-sm text-slate-200 font-medium max-w-2xl mx-auto leading-relaxed line-clamp-2 sm:line-clamp-none">
                   {slide.subtitle}
                 </p>
-                <div className="inline-block bg-white/10 backdrop-blur-md px-4 py-2 rounded-2xl border border-white/20 text-xs sm:text-sm text-amber-200 font-bold mt-2">
+                <div className="inline-block bg-white/10 backdrop-blur-md px-3 py-1 rounded-xl border border-white/20 text-[10px] sm:text-xs text-amber-200 font-bold mt-1">
                   ✨ {slide.highlight}
                 </div>
               </div>
 
               {/* Bottom Contact Strip */}
-              <div className="pt-3 border-t border-white/15 flex flex-wrap items-center justify-between gap-3 text-xs">
-                <div className="flex items-center gap-3">
+              <div className="pt-2 border-t border-white/15 flex flex-wrap items-center justify-between gap-2 text-[10px] sm:text-xs">
+                <div className="flex items-center gap-2">
                   <a
                     href={`tel:${LANDLINE_PHONE.replace(/\s+/g, '')}`}
-                    className="flex items-center gap-1.5 bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded-xl text-white font-bold"
+                    className="flex items-center gap-1 bg-white/10 hover:bg-white/20 px-2 sm:px-3 py-1 rounded-lg text-white font-bold"
                   >
-                    <Phone className="w-3.5 h-3.5 text-amber-400" />
+                    <Phone className="w-3 h-3 text-amber-400" />
                     <span dir="ltr">{LANDLINE_PHONE}</span>
                   </a>
                   <a
                     href={`https://wa.me/${ADMIN_PHONE}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-1.5 bg-emerald-600 hover:bg-emerald-700 px-3 py-1.5 rounded-xl text-white font-bold"
+                    className="flex items-center gap-1 bg-emerald-600 hover:bg-emerald-700 px-2 sm:px-3 py-1 rounded-lg text-white font-bold"
                   >
-                    <MessageCircle className="w-3.5 h-3.5 fill-white text-emerald-600" />
+                    <MessageCircle className="w-3 h-3 fill-white text-emerald-600" />
                     <span dir="ltr">{siteConfig.whatsapp}</span>
                   </a>
                 </div>
 
                 <div className="flex items-center gap-1 text-slate-300">
-                  <MapPin className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-                  <span className="text-[11px] truncate max-w-[280px]">{siteConfig.address}</span>
+                  <MapPin className="w-3 h-3 text-amber-400 shrink-0" />
+                  <span className="text-[10px] sm:text-[11px] truncate max-w-[200px] sm:max-w-none">{siteConfig.address}</span>
                 </div>
               </div>
 
@@ -160,30 +160,30 @@ export default function HeroSlider({ onOpenRegister, lang, t }) {
       {/* Navigation Arrows */}
       <button
         onClick={prevSlide}
-        className={`absolute top-1/2 -translate-y-1/2 ${isUrdu ? 'right-3' : 'left-3'} w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-black/50 hover:bg-black/80 text-white flex items-center justify-center backdrop-blur-sm transition-all border border-white/20 shadow-lg z-20`}
+        className={`absolute top-1/2 -translate-y-1/2 ${isUrdu ? 'right-2' : 'left-2'} w-7 h-7 sm:w-10 sm:h-10 rounded-full bg-black/60 hover:bg-black/90 text-white flex items-center justify-center backdrop-blur-sm transition-all border border-white/20 shadow-md z-20`}
         aria-label="Previous Slide"
       >
-        <ChevronRight className="w-6 h-6" />
+        <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
       </button>
 
       <button
         onClick={nextSlide}
-        className={`absolute top-1/2 -translate-y-1/2 ${isUrdu ? 'left-3' : 'right-3'} w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-black/50 hover:bg-black/80 text-white flex items-center justify-center backdrop-blur-sm transition-all border border-white/20 shadow-lg z-20`}
+        className={`absolute top-1/2 -translate-y-1/2 ${isUrdu ? 'left-2' : 'right-2'} w-7 h-7 sm:w-10 sm:h-10 rounded-full bg-black/60 hover:bg-black/90 text-white flex items-center justify-center backdrop-blur-sm transition-all border border-white/20 shadow-md z-20`}
         aria-label="Next Slide"
       >
-        <ChevronLeft className="w-6 h-6" />
+        <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
       </button>
 
       {/* Dots Indicator */}
-      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-2 z-20 bg-black/40 px-3 py-1 rounded-full backdrop-blur-sm">
+      <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex items-center gap-1.5 z-20 bg-black/50 px-2.5 py-0.5 rounded-full backdrop-blur-sm">
         {slides.map((_, i) => (
           <button
             key={i}
             onClick={() => setCurrentSlide(i)}
             className={`transition-all rounded-full ${
               i === currentSlide
-                ? 'w-6 h-2 bg-amber-400'
-                : 'w-2 h-2 bg-white/60 hover:bg-white'
+                ? 'w-4 h-1.5 bg-amber-400'
+                : 'w-1.5 h-1.5 bg-white/60 hover:bg-white'
             }`}
             aria-label={`Slide ${i + 1}`}
           />

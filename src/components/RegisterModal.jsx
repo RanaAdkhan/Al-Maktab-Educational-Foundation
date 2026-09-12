@@ -49,44 +49,44 @@ export default function RegisterModal({ isOpen, onClose, onAddProfile, lang, t }
   };
 
   return (
-    <div className="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto">
-      <div className={`bg-white rounded-3xl shadow-2xl max-w-2xl w-full p-6 sm:p-8 relative my-8 border border-amber-200 animate-in zoom-in-95 duration-200 ${isUrdu ? 'text-right' : 'text-left'}`}>
+    <div className="fixed inset-0 bg-slate-950/75 backdrop-blur-sm z-50 flex items-center justify-center p-2.5 sm:p-4 overflow-y-auto">
+      <div className={`bg-white rounded-2xl sm:rounded-3xl shadow-2xl max-w-2xl w-full p-4 sm:p-8 relative my-4 sm:my-8 border border-amber-200 max-h-[92vh] overflow-y-auto ${isUrdu ? 'text-right' : 'text-left'}`}>
         
         {/* Close Button */}
         <button
           onClick={onClose}
-          className={`absolute top-5 ${isUrdu ? 'left-5' : 'right-5'} text-slate-400 hover:text-slate-700 text-xl p-1.5 rounded-full hover:bg-slate-100 transition-colors`}
+          className={`absolute top-3 sm:top-5 ${isUrdu ? 'left-3 sm:left-5' : 'right-3 sm:right-5'} text-slate-400 hover:text-slate-700 p-1.5 rounded-full hover:bg-slate-100 transition-colors`}
         >
-          <X className="w-6 h-6" />
+          <X className="w-5 h-5" />
         </button>
 
         {/* Modal Heading */}
-        <div className="text-center mb-6">
-          <div className="w-12 h-12 bg-amber-100 text-amber-800 rounded-2xl flex items-center justify-center mx-auto mb-2 border border-amber-300">
-            <Heart className="w-6 h-6 fill-amber-600 text-amber-600" />
+        <div className="text-center mb-4 sm:mb-6 pt-2 sm:pt-0">
+          <div className="w-10 h-10 sm:w-12 sm:h-12 bg-amber-100 text-amber-800 rounded-xl sm:rounded-2xl flex items-center justify-center mx-auto mb-2 border border-amber-300">
+            <Heart className="w-5 h-5 sm:w-6 sm:h-6 fill-amber-600 text-amber-600" />
           </div>
-          <h3 className="text-xl sm:text-2xl font-black text-slate-900 mb-1">
+          <h3 className="text-lg sm:text-2xl font-black text-slate-900 mb-0.5">
             {t.regModalTitle}
           </h3>
-          <p className="text-xs text-slate-500">
+          <p className="text-[10px] sm:text-xs text-slate-500 max-w-md mx-auto">
             {t.regModalSubtitle}
           </p>
         </div>
 
         {submitted ? (
-          <div className="py-12 text-center space-y-3">
-            <CheckCircle2 className="w-16 h-16 text-emerald-600 mx-auto animate-bounce" />
-            <h4 className="text-2xl font-bold text-slate-900">{t.regSuccessHeading}</h4>
-            <p className="text-sm text-slate-600">
+          <div className="py-8 sm:py-12 text-center space-y-3">
+            <CheckCircle2 className="w-12 h-12 sm:w-16 sm:h-16 text-emerald-600 mx-auto animate-bounce" />
+            <h4 className="text-xl sm:text-2xl font-bold text-slate-900">{t.regSuccessHeading}</h4>
+            <p className="text-xs sm:text-sm text-slate-600">
               {t.regSuccessDesc}
             </p>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4 text-xs sm:text-sm">
             
             {/* Candidate Name */}
             <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1">
+              <label className="block font-bold text-slate-700 mb-1 text-[11px] sm:text-xs">
                 {t.fullNameLabel}
               </label>
               <input
@@ -95,20 +95,20 @@ export default function RegisterModal({ isOpen, onClose, onAddProfile, lang, t }
                 placeholder={isUrdu ? "مثلاً فاطمہ نور / محمد احمد" : "e.g. Fatima Noor / Muhammad Bilal"}
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                className="w-full border border-slate-200 rounded-xl p-2.5 bg-slate-50 focus:ring-2 focus:ring-amber-500 focus:bg-white outline-none text-xs sm:text-sm"
+                className="w-full border border-slate-200 rounded-xl p-2 sm:p-2.5 bg-slate-50 focus:ring-2 focus:ring-amber-500 focus:bg-white outline-none"
               />
             </div>
 
             {/* Row 1: Gender, Age, Height */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-3">
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">
+                <label className="block font-bold text-slate-700 mb-1 text-[11px] sm:text-xs">
                   {t.genderLabel}
                 </label>
                 <select
                   value={formData.gender}
                   onChange={(e) => setFormData({ ...formData, gender: e.target.value })}
-                  className="w-full border border-slate-200 rounded-xl p-2.5 bg-slate-50 focus:ring-2 focus:ring-amber-500 outline-none text-xs sm:text-sm"
+                  className="w-full border border-slate-200 rounded-xl p-2 sm:p-2.5 bg-slate-50 focus:ring-2 focus:ring-amber-500 outline-none"
                 >
                   <option value="عورت">{t.bride}</option>
                   <option value="مرد">{t.groom}</option>
@@ -116,7 +116,7 @@ export default function RegisterModal({ isOpen, onClose, onAddProfile, lang, t }
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">
+                <label className="block font-bold text-slate-700 mb-1 text-[11px] sm:text-xs">
                   {t.ageInputLabel}
                 </label>
                 <input
@@ -127,12 +127,12 @@ export default function RegisterModal({ isOpen, onClose, onAddProfile, lang, t }
                   placeholder="24"
                   value={formData.age}
                   onChange={(e) => setFormData({ ...formData, age: e.target.value })}
-                  className="w-full border border-slate-200 rounded-xl p-2.5 bg-slate-50 focus:ring-2 focus:ring-amber-500 outline-none text-xs sm:text-sm"
+                  className="w-full border border-slate-200 rounded-xl p-2 sm:p-2.5 bg-slate-50 focus:ring-2 focus:ring-amber-500 outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">
+                <label className="block font-bold text-slate-700 mb-1 text-[11px] sm:text-xs">
                   {t.heightInputLabel}
                 </label>
                 <input
@@ -140,21 +140,21 @@ export default function RegisterModal({ isOpen, onClose, onAddProfile, lang, t }
                   placeholder="5'5&quot;"
                   value={formData.height}
                   onChange={(e) => setFormData({ ...formData, height: e.target.value })}
-                  className="w-full border border-slate-200 rounded-xl p-2.5 bg-slate-50 focus:ring-2 focus:ring-amber-500 outline-none text-xs sm:text-sm"
+                  className="w-full border border-slate-200 rounded-xl p-2 sm:p-2.5 bg-slate-50 focus:ring-2 focus:ring-amber-500 outline-none"
                 />
               </div>
             </div>
 
             {/* Row 2: Marital, Caste, City */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-3">
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">
+                <label className="block font-bold text-slate-700 mb-1 text-[11px] sm:text-xs">
                   {t.maritalInputLabel}
                 </label>
                 <select
                   value={formData.marital}
                   onChange={(e) => setFormData({ ...formData, marital: e.target.value })}
-                  className="w-full border border-slate-200 rounded-xl p-2.5 bg-slate-50 focus:ring-2 focus:ring-amber-500 outline-none text-xs sm:text-sm"
+                  className="w-full border border-slate-200 rounded-xl p-2 sm:p-2.5 bg-slate-50 focus:ring-2 focus:ring-amber-500 outline-none"
                 >
                   <option value="کنوارا/کنواری">{isUrdu ? 'کنوارا / کنواری' : 'Single / Unmarried'}</option>
                   <option value="طلاق یافتہ">{isUrdu ? 'طلاق یافتہ' : 'Divorced'}</option>
@@ -163,7 +163,7 @@ export default function RegisterModal({ isOpen, onClose, onAddProfile, lang, t }
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">
+                <label className="block font-bold text-slate-700 mb-1 text-[11px] sm:text-xs">
                   {t.casteInputLabel}
                 </label>
                 <input
@@ -172,12 +172,12 @@ export default function RegisterModal({ isOpen, onClose, onAddProfile, lang, t }
                   placeholder={isUrdu ? "مثلاً راجپوت، آرائیں، جٹ" : "e.g. Rajput, Arain, Jatt"}
                   value={formData.caste}
                   onChange={(e) => setFormData({ ...formData, caste: e.target.value })}
-                  className="w-full border border-slate-200 rounded-xl p-2.5 bg-slate-50 focus:ring-2 focus:ring-amber-500 outline-none text-xs sm:text-sm"
+                  className="w-full border border-slate-200 rounded-xl p-2 sm:p-2.5 bg-slate-50 focus:ring-2 focus:ring-amber-500 outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">
+                <label className="block font-bold text-slate-700 mb-1 text-[11px] sm:text-xs">
                   {t.cityInputLabel}
                 </label>
                 <input
@@ -186,44 +186,44 @@ export default function RegisterModal({ isOpen, onClose, onAddProfile, lang, t }
                   placeholder={isUrdu ? "مثلاً لاہور" : "e.g. Lahore"}
                   value={formData.city}
                   onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-                  className="w-full border border-slate-200 rounded-xl p-2.5 bg-slate-50 focus:ring-2 focus:ring-amber-500 outline-none text-xs sm:text-sm"
+                  className="w-full border border-slate-200 rounded-xl p-2 sm:p-2.5 bg-slate-50 focus:ring-2 focus:ring-amber-500 outline-none"
                 />
               </div>
             </div>
 
             {/* Row 3: Education, Job */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3">
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">
+                <label className="block font-bold text-slate-700 mb-1 text-[11px] sm:text-xs">
                   {t.educationInputLabel}
                 </label>
                 <input
                   type="text"
                   required
-                  placeholder={isUrdu ? "مثلاً ایم ایس سی، ایم بی بی ایس، بی اے" : "e.g. MSc, MBBS, MBA"}
+                  placeholder={isUrdu ? "مثلاً ایم ایس سی، ایم بی بی ایس" : "e.g. MSc, MBBS, MBA"}
                   value={formData.education}
                   onChange={(e) => setFormData({ ...formData, education: e.target.value })}
-                  className="w-full border border-slate-200 rounded-xl p-2.5 bg-slate-50 focus:ring-2 focus:ring-amber-500 outline-none text-xs sm:text-sm"
+                  className="w-full border border-slate-200 rounded-xl p-2 sm:p-2.5 bg-slate-50 focus:ring-2 focus:ring-amber-500 outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">
+                <label className="block font-bold text-slate-700 mb-1 text-[11px] sm:text-xs">
                   {t.jobInputLabel}
                 </label>
                 <input
                   type="text"
-                  placeholder={isUrdu ? "مثلاً سافٹ ویئر انجینئر، گورنمنٹ جاب" : "e.g. Software Engineer, Doctor, Govt Job"}
+                  placeholder={isUrdu ? "مثلاً سافٹ ویئر انجینئر، جاب" : "e.g. Software Engineer, Govt Job"}
                   value={formData.job}
                   onChange={(e) => setFormData({ ...formData, job: e.target.value })}
-                  className="w-full border border-slate-200 rounded-xl p-2.5 bg-slate-50 focus:ring-2 focus:ring-amber-500 outline-none text-xs sm:text-sm"
+                  className="w-full border border-slate-200 rounded-xl p-2 sm:p-2.5 bg-slate-50 focus:ring-2 focus:ring-amber-500 outline-none"
                 />
               </div>
             </div>
 
             {/* WhatsApp Contact */}
             <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1">
+              <label className="block font-bold text-slate-700 mb-1 text-[11px] sm:text-xs">
                 {t.contactInputLabel}
               </label>
               <input
@@ -233,28 +233,28 @@ export default function RegisterModal({ isOpen, onClose, onAddProfile, lang, t }
                 dir="ltr"
                 value={formData.contact}
                 onChange={(e) => setFormData({ ...formData, contact: e.target.value })}
-                className="w-full border border-slate-200 rounded-xl p-2.5 bg-slate-50 focus:ring-2 focus:ring-amber-500 outline-none text-xs sm:text-sm text-left"
+                className="w-full border border-slate-200 rounded-xl p-2 sm:p-2.5 bg-slate-50 focus:ring-2 focus:ring-amber-500 outline-none text-left"
               />
             </div>
 
             {/* Partner Demands */}
             <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1">
+              <label className="block font-bold text-slate-700 mb-1 text-[11px] sm:text-xs">
                 {t.demandsInputLabel}
               </label>
               <textarea
                 rows="2"
-                placeholder={isUrdu ? "مطلوبہ رشتے کی تعلیم، عمر اور خاندانی ترجیحات..." : "Preferred partner age, education, caste or religious values..."}
+                placeholder={isUrdu ? "مطلوبہ رشتے کی تعلیم، عمر اور خاندانی ترجیحات..." : "Preferred partner age, education, caste..."}
                 value={formData.demands}
                 onChange={(e) => setFormData({ ...formData, demands: e.target.value })}
-                className="w-full border border-slate-200 rounded-xl p-2.5 bg-slate-50 focus:ring-2 focus:ring-amber-500 outline-none text-xs sm:text-sm resize-none"
+                className="w-full border border-slate-200 rounded-xl p-2 sm:p-2.5 bg-slate-50 focus:ring-2 focus:ring-amber-500 outline-none resize-none"
               />
             </div>
 
             {/* Submit */}
             <button
               type="submit"
-              className="w-full bg-slate-900 hover:bg-amber-600 hover:text-slate-950 text-amber-400 font-black py-3.5 rounded-xl shadow-lg shadow-slate-900/20 transition-all mt-2 text-xs sm:text-sm hover:scale-[1.01] active:scale-[0.99]"
+              className="w-full bg-slate-900 hover:bg-amber-600 hover:text-slate-950 text-amber-400 font-black py-3 sm:py-3.5 rounded-xl shadow-lg transition-all mt-2 text-xs sm:text-sm hover:scale-[1.01] active:scale-[0.99]"
             >
               {t.btnSubmitProfile}
             </button>
