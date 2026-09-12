@@ -14,24 +14,21 @@
 }
 
 @font-face {
-  font-family: 'Jameel Noori Nastaleeq';
-  src: url('https://cdn.jsdelivr.net/gh/urdutext/fonts@master/JameelNooriNastaleeq/JameelNooriNastaleeq.woff2') format('woff2');
-  font-weight: bold;
+  font-family: 'Jameel Noori Nastaleeq Kasheeda';
+  src: url('https://cdn.jsdelivr.net/gh/urdutext/fonts@master/JameelNooriNastaleeqKasheeda/JameelNooriNastaleeqKasheeda.woff2') format('woff2');
+  font-weight: normal;
   font-style: normal;
   font-display: swap;
 }
 
-@layer base {
-  body {
-    @apply antialiased text-slate-800 bg-slate-50;
-    font-family: 'Jameel Noori Nastaleeq', 'Noto Nastaliq Urdu', Tahoma, Arial, sans-serif;
-    line-height: 2.4;
-    letter-spacing: 0.01em;
-  }
+* {
+  font-family: 'Jameel Noori Nastaleeq', 'Noto Nastaliq Urdu', Tahoma, Arial, sans-serif !important;
+}
 
-  input, select, textarea, button {
-    font-family: 'Jameel Noori Nastaleeq', 'Noto Nastaliq Urdu', Tahoma, Arial, sans-serif;
-  }
+body {
+  @apply antialiased text-slate-800 bg-slate-50;
+  line-height: 2.3;
+  letter-spacing: 0.01em;
 }
 
 /* Custom scrollbar */
@@ -53,9 +50,7 @@
   background: #b45309;
 }
 
-/* Glass header */
-.glass-header {
-  background: rgba(15, 23, 42, 0.95);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+/* Smooth animations */
+.transition-smooth {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
