@@ -83,3 +83,96 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #b45309;
 }
+
+/* =========================================================
+   ROTATING GLOW LIGHT BORDER & HOVER ZOOM CARD ANIMATION
+   ========================================================= */
+
+@keyframes rotate-light-border {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.glow-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1.5rem;
+  background: #ffffff;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;
+  z-index: 1;
+}
+
+.glow-card:hover {
+  transform: translateY(-8px) scale(1.03);
+  z-index: 20;
+}
+
+/* Groom Glowing Shadow on Hover */
+.glow-card-groom:hover {
+  box-shadow: 0 20px 35px -8px rgba(217, 119, 6, 0.35), 0 0 25px rgba(245, 158, 11, 0.25);
+}
+
+/* Bride Glowing Shadow on Hover */
+.glow-card-bride:hover {
+  box-shadow: 0 20px 35px -8px rgba(225, 29, 72, 0.35), 0 0 25px rgba(244, 63, 94, 0.25);
+}
+
+/* Rotating Light Beam in the Background of the Border */
+.glow-border-beam {
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  animation: rotate-light-border 3.5s linear infinite;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.glow-border-groom {
+  background: conic-gradient(
+    from 0deg,
+    transparent 0%,
+    #f59e0b 25%,
+    #fde68a 35%,
+    transparent 50%,
+    #38bdf8 75%,
+    #0284c7 85%,
+    transparent 100%
+  );
+}
+
+.glow-border-bride {
+  background: conic-gradient(
+    from 0deg,
+    transparent 0%,
+    #e11d48 25%,
+    #fecdd3 35%,
+    transparent 50%,
+    #f43f5e 75%,
+    #fb7185 85%,
+    transparent 100%
+  );
+}
+
+.glow-card:hover .glow-border-beam {
+  opacity: 1;
+}
+
+.glow-card-content {
+  position: relative;
+  z-index: 10;
+  border-radius: calc(1.5rem - 2px);
+  margin: 2.5px;
+  background: #ffffff;
+  height: calc(100% - 5px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
