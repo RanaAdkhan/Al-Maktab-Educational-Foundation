@@ -83,6 +83,7 @@ export default function App() {
         setMaritalFilter={setMaritalFilter}
         onResetFilters={handleResetFilters}
         totalProfilesCount={profiles.length}
+        onOpenRegister={() => setIsRegisterOpen(true)}
       />
 
       {/* Main Profiles Grid */}

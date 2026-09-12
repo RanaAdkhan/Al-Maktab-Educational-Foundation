@@ -1,6 +1,7 @@
 import React from 'react';
-import { Search, RotateCcw, MapPin, Phone, MessageCircle, Sparkles, BookOpen, Heart } from 'lucide-react';
+import { Search, RotateCcw, MapPin, Phone, MessageCircle, Sparkles, BookOpen } from 'lucide-react';
 import { siteConfig, ADMIN_PHONE, LANDLINE_PHONE } from '../data/matrimonialData';
+import HeroSlider from './HeroSlider';
 
 export default function HeroSearch({
   genderFilter,
@@ -12,61 +13,18 @@ export default function HeroSearch({
   maritalFilter,
   setMaritalFilter,
   onResetFilters,
-  totalProfilesCount
+  totalProfilesCount,
+  onOpenRegister
 }) {
   return (
-    <section className="bg-gradient-to-b from-amber-50 via-rose-50/40 to-slate-50 py-8 px-4 border-b border-amber-200/60">
+    <section className="bg-gradient-to-b from-amber-50/60 via-rose-50/30 to-slate-50 py-6 px-4 border-b border-amber-200/60">
       <div className="max-w-5xl mx-auto text-center">
         
-        {/* Foundation Notice Badge */}
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-900 text-amber-400 text-xs sm:text-sm font-bold mb-4 shadow-md border border-amber-500/40">
-          <Sparkles className="w-4 h-4 text-amber-400" />
-          <span>{siteConfig.parentOrg}</span>
-        </div>
-
-        {/* Main Banner Headline from Image */}
-        <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 mb-3 leading-relaxed">
-          {siteConfig.mainTagline}
-        </h2>
-
-        {/* Special Religious & Madaris Notice Highlight Box */}
-        <div className="bg-emerald-800 text-white rounded-2xl p-3 sm:p-4 max-w-2xl mx-auto mb-6 shadow-md flex items-center justify-center gap-2.5 border border-emerald-600">
-          <BookOpen className="w-5 h-5 text-emerald-300 shrink-0" />
-          <p className="text-xs sm:text-sm md:text-base font-bold">
-            {siteConfig.religiousTagline}
-          </p>
-        </div>
-
-        {/* Official Contact Badges Bar */}
-        <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 mb-8">
-          <a
-            href={`tel:${LANDLINE_PHONE.replace(/\s+/g, '')}`}
-            className="flex items-center gap-2 bg-white px-4 py-2 rounded-2xl shadow-sm border border-slate-200 text-slate-800 font-black text-xs sm:text-sm hover:border-amber-500 transition-colors"
-          >
-            <div className="w-7 h-7 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center">
-              <Phone className="w-4 h-4" />
-            </div>
-            <span dir="ltr">{LANDLINE_PHONE}</span>
-          </a>
-
-          <a
-            href={`https://wa.me/${ADMIN_PHONE}?text=${encodeURIComponent('السلام علیکم! مجھے ہمسفر رشتہ سنٹر کے متعلق معلومات حاصل کرنی ہیں۔')}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 bg-emerald-600 text-white px-4 py-2 rounded-2xl shadow-md font-black text-xs sm:text-sm hover:bg-emerald-700 transition-all"
-          >
-            <MessageCircle className="w-4 h-4 fill-white text-emerald-600" />
-            <span dir="ltr" className="font-sans">{siteConfig.whatsapp}</span>
-          </a>
-
-          <div className="flex items-center gap-1.5 bg-amber-100/80 text-amber-900 px-3.5 py-2 rounded-2xl text-xs font-bold border border-amber-300">
-            <MapPin className="w-4 h-4 text-amber-700 shrink-0" />
-            <span>مزنگ روڈ، لاہور</span>
-          </div>
-        </div>
+        {/* Islamic & Foundation Slides Carousel */}
+        <HeroSlider onOpenRegister={onOpenRegister} />
 
         {/* Search & Filter Box */}
-        <div className="bg-white p-5 sm:p-7 rounded-3xl shadow-xl shadow-slate-900/5 border border-slate-200 text-right">
+        <div className="bg-white p-5 sm:p-7 rounded-3xl shadow-xl shadow-slate-900/5 border border-slate-200 text-right mt-6">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
             
             {/* Gender */}
