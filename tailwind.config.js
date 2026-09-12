@@ -7,7 +7,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        urdu: ['"Noto Nastaliq Urdu"', 'Tahoma', 'Arial', 'sans-serif'],
+        urdu: ['"Jameel Noori Nastaleeq"', '"Noto Nastaliq Urdu"', 'Tahoma', 'Arial', 'sans-serif'],
         sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
       },
       colors: {

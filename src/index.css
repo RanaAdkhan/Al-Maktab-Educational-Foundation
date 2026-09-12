@@ -2,10 +2,35 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Jameel Noori Nastaleeq Web Font Definition */
+@font-face {
+  font-family: 'Jameel Noori Nastaleeq';
+  src: url('https://cdn.jsdelivr.net/gh/urdutext/fonts@master/JameelNooriNastaleeq/JameelNooriNastaleeq.woff2') format('woff2'),
+       url('https://cdn.jsdelivr.net/gh/urdutext/fonts@master/JameelNooriNastaleeq/JameelNooriNastaleeq.woff') format('woff'),
+       url('https://cdn.jsdelivr.net/gh/urdutext/fonts@master/JameelNooriNastaleeq/JameelNooriNastaleeq.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Jameel Noori Nastaleeq';
+  src: url('https://cdn.jsdelivr.net/gh/urdutext/fonts@master/JameelNooriNastaleeq/JameelNooriNastaleeq.woff2') format('woff2');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
 @layer base {
   body {
     @apply antialiased text-slate-800 bg-slate-50;
-    line-height: 2.1;
+    font-family: 'Jameel Noori Nastaleeq', 'Noto Nastaliq Urdu', Tahoma, Arial, sans-serif;
+    line-height: 2.4;
+    letter-spacing: 0.01em;
+  }
+
+  input, select, textarea, button {
+    font-family: 'Jameel Noori Nastaleeq', 'Noto Nastaliq Urdu', Tahoma, Arial, sans-serif;
   }
 }
 
@@ -20,17 +45,17 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #f43f5e;
+  background: #d97706;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #be123c;
+  background: #b45309;
 }
 
-/* Glass effect */
+/* Glass header */
 .glass-header {
-  background: rgba(190, 18, 60, 0.95);
+  background: rgba(15, 23, 42, 0.95);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 }
