@@ -9,9 +9,13 @@ import DetailModal from './components/DetailModal';
 import WhyChooseMatrimonial from './components/WhyChooseMatrimonial';
 import MatrimonialFooter from './components/MatrimonialFooter';
 import { defaultProfiles, ADMIN_PHONE } from './data/matrimonialData';
-import { Search, MessageCircle, Heart, UserPlus, Users, RotateCcw } from 'lucide-react';
+import { translations } from './data/translations';
+import { Search, MessageCircle, Heart, UserPlus, RotateCcw } from 'lucide-react';
 
 export default function App() {
+  const [lang, setLang] = useState('ur'); // 'ur' or 'en'
+  const t = translations[lang] || translations.ur;
+
   const [profiles, setProfiles] = useState([]);
   const [genderFilter, setGenderFilter] = useState('all');
   const [cityFilter, setCityFilter] = useState('');
@@ -22,6 +26,19 @@ export default function App() {
   // Modals state
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
   const [selectedProfile, setSelectedProfile] = useState(null);
+
+  // Sync HTML dir and lang attribute
+  useEffect(() => {
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === 'ur' ? 'rtl' : 'ltr';
+    if (lang === 'ur') {
+      document.body.classList.remove('lang-en');
+      document.body.classList.add('lang-ur');
+    } else {
+      document.body.classList.remove('lang-ur');
+      document.body.classList.add('lang-en');
+    }
+  }, [lang]);
 
   // Load profiles from LocalStorage on mount
   useEffect(() => {
@@ -37,6 +54,10 @@ export default function App() {
       setProfiles(defaultProfiles);
     }
   }, []);
+
+  const handleToggleLang = () => {
+    setLang((prev) => (prev === 'ur' ? 'en' : 'ur'));
+  };
 
   // Save to LocalStorage whenever new profile added
   const handleAddProfile = (newProfile) => {
@@ -74,13 +95,16 @@ export default function App() {
   });
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col font-urdu" dir="rtl">
+    <div className={`min-h-screen bg-slate-50 flex flex-col ${lang === 'ur' ? 'font-urdu' : 'font-sans'}`}>
       
-      {/* Header with Full Navigation Menu */}
+      {/* Header with Language Switcher */}
       <MatrimonialHeader
         onOpenRegister={() => setIsRegisterOpen(true)}
         onNavigate={(tab) => setActiveTab(tab)}
         activeTab={activeTab}
+        lang={lang}
+        onToggleLang={handleToggleLang}
+        t={t}
       />
 
       {/* Hero & Quick Search */}
@@ -97,16 +121,24 @@ export default function App() {
           onResetFilters={handleResetFilters}
           totalProfilesCount={profiles.length}
           onOpenRegister={() => setIsRegisterOpen(true)}
+          lang={lang}
+          t={t}
         />
       </div>
 
       {/* About Us / Foundation Section */}
-      <AboutSection onOpenRegister={() => setIsRegisterOpen(true)} />
+      <AboutSection
+        onOpenRegister={() => setIsRegisterOpen(true)}
+        lang={lang}
+        t={t}
+      />
 
       {/* Caste / Baradari Quick Filter Section */}
       <CasteFilterSection
         selectedCaste={casteFilter}
         onSelectCaste={handleSelectCaste}
+        lang={lang}
+        t={t}
       />
 
       {/* Main Profiles Grid */}
@@ -117,20 +149,20 @@ export default function App() {
           <div>
             <h3 className="text-xl sm:text-2xl font-black text-slate-900 flex items-center gap-2">
               <Heart className="w-5 h-5 text-amber-500 fill-amber-500" />
-              <span>دستیاب تصدیق شدہ رشتے</span>
+              <span>{t.availableProfilesHeading}</span>
               <span className="text-xs bg-slate-900 text-amber-400 px-3 py-1 rounded-full font-bold">
-                {filteredProfiles.length} نتائج
+                {filteredProfiles.length} {t.resultsCount}
               </span>
             </h3>
 
             {casteFilter && (
               <p className="text-xs text-slate-600 mt-1 flex items-center gap-2">
-                <span>منتخب برادری: <strong className="text-amber-700">{casteFilter}</strong></span>
+                <span>{t.selectedCasteLabel} <strong className="text-amber-700">{casteFilter}</strong></span>
                 <button
                   onClick={() => setCasteFilter('')}
                   className="text-rose-600 underline font-bold"
                 >
-                  (فلٹر ہٹائیں)
+                  ({lang === 'ur' ? 'فلٹر ہٹائیں' : 'Clear'})
                 </button>
               </p>
             )}
@@ -143,7 +175,7 @@ export default function App() {
                 className="text-xs font-bold text-slate-600 hover:text-slate-900 flex items-center gap-1 bg-white border px-3 py-1.5 rounded-xl shadow-sm"
               >
                 <RotateCcw className="w-3.5 h-3.5" />
-                <span>تمام فلٹر صاف کریں</span>
+                <span>{t.btnReset}</span>
               </button>
             ) : null}
 
@@ -152,7 +184,7 @@ export default function App() {
               className="bg-slate-900 hover:bg-slate-800 text-amber-400 px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-md"
             >
               <UserPlus className="w-4 h-4" />
-              <span>نیا رشتہ رجسٹر کریں</span>
+              <span>{t.btnRegister}</span>
             </button>
           </div>
         </div>
@@ -162,16 +194,16 @@ export default function App() {
           <div className="text-center py-16 bg-white rounded-3xl border border-slate-200 p-8 shadow-sm">
             <Search className="w-12 h-12 text-slate-300 mx-auto mb-3" />
             <p className="text-xl font-bold text-slate-700">
-              آپ کے درج کردہ فلٹر کے مطابق کوئی رشتہ نہیں ملا۔
+              {t.noProfilesFound}
             </p>
             <p className="text-xs sm:text-sm text-slate-400 mt-1">
-              براہ کرم برادری یا شہر کا نام تبدیل کر کے دوبارہ کوشش کریں۔
+              {t.noProfilesAdvice}
             </p>
             <button
               onClick={handleResetFilters}
               className="mt-4 px-6 py-2.5 bg-slate-900 text-amber-400 rounded-xl text-xs font-bold shadow-md"
             >
-              تمام رشتے دیکھیں
+              {t.btnViewAll}
             </button>
           </div>
         ) : (
@@ -181,6 +213,8 @@ export default function App() {
                 key={profile.id}
                 profile={profile}
                 onViewDetail={(p) => setSelectedProfile(p)}
+                lang={lang}
+                t={t}
               />
             ))}
           </div>
@@ -189,11 +223,11 @@ export default function App() {
       </main>
 
       {/* Why Choose Us */}
-      <WhyChooseMatrimonial />
+      <WhyChooseMatrimonial lang={lang} t={t} />
 
       {/* Footer / Contact */}
       <div id="contact">
-        <MatrimonialFooter />
+        <MatrimonialFooter lang={lang} t={t} />
       </div>
 
       {/* Registration Modal */}
@@ -201,6 +235,8 @@ export default function App() {
         isOpen={isRegisterOpen}
         onClose={() => setIsRegisterOpen(false)}
         onAddProfile={handleAddProfile}
+        lang={lang}
+        t={t}
       />
 
       {/* Details & WhatsApp Modal */}
@@ -208,19 +244,21 @@ export default function App() {
         isOpen={!!selectedProfile}
         onClose={() => setSelectedProfile(null)}
         profile={selectedProfile}
+        lang={lang}
+        t={t}
       />
 
       {/* Floating WhatsApp Button */}
       <a
-        href={`https://wa.me/${ADMIN_PHONE}?text=${encodeURIComponent('السلام علیکم! مجھے ہمسفر رشتہ سنٹر کے متعلق معلومات حاصل کرنی ہیں۔')}`}
+        href={`https://wa.me/${ADMIN_PHONE}?text=${encodeURIComponent(lang === 'ur' ? 'السلام علیکم! مجھے ہمسفر رشتہ سنٹر کے متعلق معلومات حاصل کرنی ہیں۔' : 'Hello! I would like to get information regarding Humsafar Rishta Centre.')}`}
         target="_blank"
         rel="noopener noreferrer"
-        className="fixed bottom-6 left-6 z-40 bg-emerald-600 hover:bg-emerald-700 text-white p-4 rounded-full shadow-2xl hover:scale-110 active:scale-95 transition-all flex items-center justify-center group border-2 border-white/40"
-        title="واٹس ایپ پر رابطہ کریں"
+        className={`fixed bottom-6 ${lang === 'ur' ? 'left-6' : 'right-6'} z-40 bg-emerald-600 hover:bg-emerald-700 text-white p-4 rounded-full shadow-2xl hover:scale-110 active:scale-95 transition-all flex items-center justify-center group border-2 border-white/40`}
+        title="WhatsApp Helpline"
       >
         <MessageCircle className="w-7 h-7 fill-white text-emerald-600" />
         <span className="max-w-0 overflow-hidden whitespace-nowrap group-hover:max-w-xs transition-all duration-300 ease-in-out font-bold text-xs sm:text-sm text-white px-0 group-hover:px-2">
-          واٹس ایپ ہیلپ لائن
+          {t.btnHelpline}
         </span>
       </a>
 

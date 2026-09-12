@@ -1,33 +1,42 @@
 import React, { useState, useEffect } from 'react';
-import { ChevronRight, ChevronLeft, Phone, MessageCircle, MapPin, Sparkles, BookOpen, Heart, ShieldCheck } from 'lucide-react';
+import { ChevronRight, ChevronLeft, Phone, MessageCircle, MapPin } from 'lucide-react';
 import { siteConfig, ADMIN_PHONE, LANDLINE_PHONE } from '../data/matrimonialData';
 
-export default function HeroSlider({ onOpenRegister }) {
+export default function HeroSlider({ onOpenRegister, lang, t }) {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const isUrdu = lang === 'ur';
 
   const slides = [
     {
       id: 1,
       type: 'image_banner',
       image: './banner.png',
-      alt: 'ہمسفر رشتہ سنٹر زیر اہتمام المکتب ایجوکیشنل فاؤنڈیشن'
+      alt: 'Humsafar Rishta Centre Under Auspices of Al-Maktab Foundation'
     },
     {
       id: 2,
       type: 'islamic_theme',
-      title: 'النِّكَاحُ مِنْ سُنَّتِي — نکاح میری سنت ہے',
-      subtitle: 'سنتِ نبوی ﷺ کے عین مطابق آسان اور بابرکت ازدواجی رشتوں کی خدمات',
-      highlight: 'دینی مدارس، اساتذہ، حفاظِ قرآن اور باحجاب دیندار فیملیز کے لیے خصوصی رشتے',
-      tag: 'اسلامک ویلیوز اور سنت کے مطابق رہنمائی',
+      title: isUrdu ? 'النِّكَاحُ مِنْ سُنَّتِي — نکاح میری سنت ہے' : 'An-Nikahu Min Sunnati — Marriage is My Sunnah',
+      subtitle: isUrdu
+        ? 'سنتِ نبوی ﷺ کے عین مطابق آسان اور بابرکت ازدواجی رشتوں کی خدمات'
+        : 'Facilitating blessed and easy matrimonial proposals in accordance with the Prophetic Sunnah',
+      highlight: isUrdu
+        ? 'دینی مدارس، اساتذہ، حفاظِ قرآن اور باحجاب دیندار فیملیز کے لیے خصوصی رشتے'
+        : 'Special proposals for Islamic Scholars, Huffaz, and practicing religious families',
+      tag: isUrdu ? 'اسلامک ویلیوز اور سنت کے مطابق رہنمائی' : 'Guided by Islamic & Sunnah Values',
       bgGradient: 'from-emerald-950 via-slate-900 to-teal-950'
     },
     {
       id: 3,
       type: 'education_theme',
-      title: 'پڑھے لکھے، کوالیفائیڈ اور باوقار خاندانی رشتے',
-      subtitle: 'ڈاکٹرز، انجینئرز، چارٹرڈ اکاؤنٹنٹس، پروفیشنلز اور اوورسیز پاکستانیز کے تصدیق شدہ کوائف',
-      highlight: 'خواتین کے کوائف کی 100% رازداری اور صرف سنجیدہ فیملیز سے براہِ راست رابطہ',
-      tag: '100% تصدیق شدہ اور محفوظ کوائف',
+      title: isUrdu ? 'پڑھے لکھے، کوالیفائیڈ اور باوقار خاندانی رشتے' : 'Educated, Qualified & Dignified Family Proposals',
+      subtitle: isUrdu
+        ? 'ڈاکٹرز، انجینئرز، چارٹرڈ اکاؤنٹنٹس، پروفیشنلز اور اوورسیز پاکستانیز کے تصدیق شدہ کوائف'
+        : 'Verified profiles of Doctors, Engineers, Chartered Accountants & Overseas Pakistanis',
+      highlight: isUrdu
+        ? 'خواتین کے کوائف کی 100% رازداری اور صرف سنجیدہ فیملیز سے براہِ راست رابطہ'
+        : '100% privacy for female candidates and direct guardian communication',
+      tag: isUrdu ? '100% تصدیق شدہ اور محفوظ کوائف' : '100% Verified & Private Data',
       bgGradient: 'from-slate-950 via-slate-900 to-amber-950'
     }
   ];
@@ -87,12 +96,12 @@ export default function HeroSlider({ onOpenRegister }) {
                   <div className="w-10 h-10 bg-white rounded-xl p-0.5 overflow-hidden border border-amber-400">
                     <img src="./logo.png" alt="Logo" className="w-full h-full object-contain" />
                   </div>
-                  <div className="text-right">
+                  <div className={isUrdu ? 'text-right' : 'text-left'}>
                     <span className="text-[10px] sm:text-xs text-amber-300 font-semibold block leading-tight">
-                      {siteConfig.parentOrg}
+                      {t.parentOrg}
                     </span>
                     <span className="text-sm sm:text-base font-black text-white">
-                      {siteConfig.title}
+                      {t.title}
                     </span>
                   </div>
                 </div>
@@ -151,7 +160,7 @@ export default function HeroSlider({ onOpenRegister }) {
       {/* Navigation Arrows */}
       <button
         onClick={prevSlide}
-        className="absolute top-1/2 -translate-y-1/2 right-3 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-black/50 hover:bg-black/80 text-white flex items-center justify-center backdrop-blur-sm transition-all border border-white/20 shadow-lg z-20"
+        className={`absolute top-1/2 -translate-y-1/2 ${isUrdu ? 'right-3' : 'left-3'} w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-black/50 hover:bg-black/80 text-white flex items-center justify-center backdrop-blur-sm transition-all border border-white/20 shadow-lg z-20`}
         aria-label="Previous Slide"
       >
         <ChevronRight className="w-6 h-6" />
@@ -159,7 +168,7 @@ export default function HeroSlider({ onOpenRegister }) {
 
       <button
         onClick={nextSlide}
-        className="absolute top-1/2 -translate-y-1/2 left-3 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-black/50 hover:bg-black/80 text-white flex items-center justify-center backdrop-blur-sm transition-all border border-white/20 shadow-lg z-20"
+        className={`absolute top-1/2 -translate-y-1/2 ${isUrdu ? 'left-3' : 'right-3'} w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-black/50 hover:bg-black/80 text-white flex items-center justify-center backdrop-blur-sm transition-all border border-white/20 shadow-lg z-20`}
         aria-label="Next Slide"
       >
         <ChevronLeft className="w-6 h-6" />

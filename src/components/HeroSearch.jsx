@@ -14,43 +14,45 @@ export default function HeroSearch({
   setMaritalFilter,
   onResetFilters,
   totalProfilesCount,
-  onOpenRegister
+  onOpenRegister,
+  lang,
+  t
 }) {
   return (
     <section className="bg-gradient-to-b from-amber-50/60 via-rose-50/30 to-slate-50 py-6 px-4 border-b border-amber-200/60">
       <div className="max-w-5xl mx-auto text-center">
         
         {/* Islamic & Foundation Slides Carousel */}
-        <HeroSlider onOpenRegister={onOpenRegister} />
+        <HeroSlider onOpenRegister={onOpenRegister} lang={lang} t={t} />
 
         {/* Search & Filter Box */}
-        <div className="bg-white p-5 sm:p-7 rounded-3xl shadow-xl shadow-slate-900/5 border border-slate-200 text-right mt-6">
+        <div className={`bg-white p-5 sm:p-7 rounded-3xl shadow-xl shadow-slate-900/5 border border-slate-200 mt-6 ${lang === 'ur' ? 'text-right' : 'text-left'}`}>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
             
             {/* Gender */}
             <div>
               <label className="block text-xs font-bold text-slate-700 mb-1.5">
-                تلاش برائے:
+                {t.labelSearchFor}
               </label>
               <select
                 value={genderFilter}
                 onChange={(e) => setGenderFilter(e.target.value)}
                 className="w-full border border-slate-200 rounded-xl p-2.5 bg-slate-50 focus:ring-2 focus:ring-amber-500 focus:bg-white outline-none text-xs sm:text-sm font-medium transition-all"
               >
-                <option value="all">تمام رشتے</option>
-                <option value="عورت">دلہن (خاتون)</option>
-                <option value="مرد">دولہا (مرد)</option>
+                <option value="all">{t.allGenders}</option>
+                <option value="عورت">{t.bride}</option>
+                <option value="مرد">{t.groom}</option>
               </select>
             </div>
 
             {/* City */}
             <div>
               <label className="block text-xs font-bold text-slate-700 mb-1.5">
-                شہر درج کریں:
+                {t.labelCity}
               </label>
               <input
                 type="text"
-                placeholder="مثلاً لاہور، ملتان، اسلام آباد..."
+                placeholder={t.cityPlaceholder}
                 value={cityFilter}
                 onChange={(e) => setCityFilter(e.target.value)}
                 className="w-full border border-slate-200 rounded-xl p-2.5 bg-slate-50 focus:ring-2 focus:ring-amber-500 focus:bg-white outline-none text-xs sm:text-sm font-medium transition-all"
@@ -60,11 +62,11 @@ export default function HeroSearch({
             {/* Caste / Community */}
             <div>
               <label className="block text-xs font-bold text-slate-700 mb-1.5">
-                برادری / قوم / مسلک:
+                {t.labelCaste}
               </label>
               <input
                 type="text"
-                placeholder="مثلاً راجپوت، آرائیں، جٹ، سید..."
+                placeholder={t.castePlaceholder}
                 value={casteFilter}
                 onChange={(e) => setCasteFilter(e.target.value)}
                 className="w-full border border-slate-200 rounded-xl p-2.5 bg-slate-50 focus:ring-2 focus:ring-amber-500 focus:bg-white outline-none text-xs sm:text-sm font-medium transition-all"
@@ -78,7 +80,7 @@ export default function HeroSearch({
                 className="w-full bg-slate-800 hover:bg-slate-900 text-white font-bold py-2.5 px-4 rounded-xl transition duration-200 text-xs sm:text-sm flex items-center justify-center gap-2 shadow-sm hover:shadow"
               >
                 <RotateCcw className="w-4 h-4" />
-                <span>فلٹر صاف کریں</span>
+                <span>{t.btnReset}</span>
               </button>
             </div>
 
@@ -95,7 +97,7 @@ export default function HeroSearch({
                 : 'bg-white border border-slate-200 text-slate-700 hover:bg-amber-50'
             }`}
           >
-            سب دیکھیں ({totalProfilesCount})
+            {t.filterAll} ({totalProfilesCount})
           </button>
 
           <button
@@ -106,7 +108,7 @@ export default function HeroSearch({
                 : 'bg-white border border-slate-200 text-slate-700 hover:bg-rose-50'
             }`}
           >
-            صرف دلہن (خواتین)
+            {t.filterBridesOnly}
           </button>
 
           <button
@@ -117,7 +119,7 @@ export default function HeroSearch({
                 : 'bg-white border border-slate-200 text-slate-700 hover:bg-slate-100'
             }`}
           >
-            صرف دولہا (مرد)
+            {t.filterGroomsOnly}
           </button>
         </div>
 

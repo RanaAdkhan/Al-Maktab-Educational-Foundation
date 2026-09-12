@@ -1,23 +1,22 @@
 import React, { useState } from 'react';
-import { UserPlus, MessageCircle, PhoneCall, Menu, X, Heart, Home, Info, Users, MapPin, Search } from 'lucide-react';
+import { UserPlus, MessageCircle, PhoneCall, Menu, X, Home, Info, Users, MapPin, Search, Languages } from 'lucide-react';
 import { siteConfig, ADMIN_PHONE, LANDLINE_PHONE } from '../data/matrimonialData';
 
-export default function MatrimonialHeader({ onOpenRegister, onNavigate, activeTab }) {
+export default function MatrimonialHeader({ onOpenRegister, onNavigate, activeTab, lang, onToggleLang, t }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navLinks = [
-    { id: 'home', label: 'ہوم پیج', icon: Home },
-    { id: 'about', label: 'تعارفِ ادارہ', icon: Info },
-    { id: 'castes', label: 'برادری کے رشتے', icon: Users },
-    { id: 'profiles', label: 'تمام رشتے تلاش کریں', icon: Search },
-    { id: 'contact', label: 'رابطہ و پتہ', icon: MapPin },
+    { id: 'home', label: t.navHome, icon: Home },
+    { id: 'about', label: t.navAbout, icon: Info },
+    { id: 'castes', label: t.navCastes, icon: Users },
+    { id: 'profiles', label: t.navProfiles, icon: Search },
+    { id: 'contact', label: t.navContact, icon: MapPin },
   ];
 
   const handleNavClick = (id) => {
     onNavigate(id);
     setMobileMenuOpen(false);
 
-    // Scroll smoothly to section
     const elem = document.getElementById(id);
     if (elem) {
       elem.scrollIntoView({ behavior: 'smooth' });
@@ -38,23 +37,23 @@ export default function MatrimonialHeader({ onOpenRegister, onNavigate, activeTa
             <div className="w-12 h-12 sm:w-14 sm:h-14 bg-white rounded-2xl p-1 shadow-lg border border-amber-400 flex items-center justify-center overflow-hidden group-hover:scale-105 transition-transform shrink-0">
               <img
                 src="./logo.png"
-                alt="المکتب ایجوکیشنل فاؤنڈیشن"
+                alt="Al-Maktab Educational Foundation"
                 className="w-full h-full object-contain"
               />
             </div>
 
             <div>
               <span className="text-[10px] sm:text-xs text-amber-300 font-semibold block leading-tight">
-                {siteConfig.parentOrg}
+                {t.parentOrg}
               </span>
-              <h1 className="text-lg sm:text-2xl font-black leading-tight tracking-tight text-white flex items-center gap-1.5">
-                <span>{siteConfig.title}</span>
+              <h1 className="text-base sm:text-xl md:text-2xl font-black leading-tight tracking-tight text-white flex items-center gap-1.5">
+                <span>{t.title}</span>
               </h1>
             </div>
           </div>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden lg:flex items-center gap-6">
+          <nav className="hidden lg:flex items-center gap-5">
             {navLinks.map((link) => {
               const Icon = link.icon;
               return (
@@ -72,12 +71,22 @@ export default function MatrimonialHeader({ onOpenRegister, onNavigate, activeTa
             })}
           </nav>
 
-          {/* Action Buttons */}
+          {/* Action Buttons & Language Switcher */}
           <div className="flex items-center gap-2 sm:gap-3">
             
+            {/* Language Switcher Toggle */}
+            <button
+              onClick={onToggleLang}
+              className="flex items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-black bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-400/40 shadow-sm transition-all hover:scale-105"
+              title="Change Language / زبان تبدیل کریں"
+            >
+              <Languages className="w-3.5 h-3.5" />
+              <span>{t.langLabel}</span>
+            </button>
+
             {/* WhatsApp */}
             <a
-              href={`https://wa.me/${ADMIN_PHONE}?text=${encodeURIComponent('السلام علیکم! مجھے ہمسفر رشتہ سنٹر کے متعلق معلومات حاصل کرنی ہیں۔')}`}
+              href={`https://wa.me/${ADMIN_PHONE}?text=${encodeURIComponent(lang === 'ur' ? 'السلام علیکم! مجھے ہمسفر رشتہ سنٹر کے متعلق معلومات حاصل کرنی ہیں۔' : 'Hello! I would like to get information regarding Humsafar Rishta Centre.')}`}
               target="_blank"
               rel="noopener noreferrer"
               className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white shadow-md transition-all"
@@ -92,7 +101,7 @@ export default function MatrimonialHeader({ onOpenRegister, onNavigate, activeTa
               className="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-950 font-black px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-xl shadow-lg transition-all text-xs sm:text-sm flex items-center gap-1.5 hover:scale-[1.02] active:scale-[0.98]"
             >
               <UserPlus className="w-4 h-4" />
-              <span>نیا رشتہ درج کریں</span>
+              <span>{t.btnRegister}</span>
             </button>
 
             {/* Mobile Menu Button */}
@@ -110,7 +119,7 @@ export default function MatrimonialHeader({ onOpenRegister, onNavigate, activeTa
 
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-slate-950 border-t border-slate-800 px-4 pt-3 pb-6 space-y-2 text-right animate-in slide-in-from-top-3 duration-200">
+        <div className={`lg:hidden bg-slate-950 border-t border-slate-800 px-4 pt-3 pb-6 space-y-2 animate-in slide-in-from-top-3 duration-200 ${lang === 'ur' ? 'text-right' : 'text-left'}`}>
           {navLinks.map((link) => {
             const Icon = link.icon;
             return (
@@ -126,12 +135,23 @@ export default function MatrimonialHeader({ onOpenRegister, onNavigate, activeTa
           })}
 
           <div className="pt-3 border-t border-slate-800 flex flex-col gap-2">
+            <button
+              onClick={() => {
+                onToggleLang();
+                setMobileMenuOpen(false);
+              }}
+              className="flex items-center justify-center gap-2 p-2.5 rounded-xl bg-amber-500/20 text-amber-300 font-bold text-xs border border-amber-400/40"
+            >
+              <Languages className="w-4 h-4" />
+              <span>زبان تبدیل کریں: {t.langLabel}</span>
+            </button>
+
             <a
               href={`tel:${LANDLINE_PHONE.replace(/\s+/g, '')}`}
               className="flex items-center justify-center gap-2 p-2.5 rounded-xl bg-white/10 text-white font-bold text-xs"
             >
               <PhoneCall className="w-4 h-4 text-amber-400" />
-              <span>لینڈ لائن: {LANDLINE_PHONE}</span>
+              <span>{LANDLINE_PHONE}</span>
             </a>
             <a
               href={`https://wa.me/${ADMIN_PHONE}`}
@@ -140,7 +160,7 @@ export default function MatrimonialHeader({ onOpenRegister, onNavigate, activeTa
               className="flex items-center justify-center gap-2 p-2.5 rounded-xl bg-emerald-600 text-white font-bold text-xs"
             >
               <MessageCircle className="w-4 h-4" />
-              <span>واٹس ایپ ہیلپ لائن: {siteConfig.whatsapp}</span>
+              <span>{siteConfig.whatsapp}</span>
             </a>
           </div>
         </div>

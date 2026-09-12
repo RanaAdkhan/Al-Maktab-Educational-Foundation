@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Jameel Noori Nastaleeq Web Font Definition */
+/* Jameel Noori Nastaleeq Web Fonts */
 @font-face {
   font-family: 'Jameel Noori Nastaleeq';
   src: url('https://cdn.jsdelivr.net/gh/urdutext/fonts@master/JameelNooriNastaleeq/JameelNooriNastaleeq.woff2') format('woff2'),
@@ -21,13 +21,34 @@
   font-display: swap;
 }
 
-* {
-  font-family: 'Jameel Noori Nastaleeq', 'Noto Nastaliq Urdu', Tahoma, Arial, sans-serif !important;
+/* Urdu Language Font Rule */
+html[lang="ur"], html[dir="rtl"], .lang-ur {
+  font-family: 'Jameel Noori Nastaleeq', 'Noto Nastaliq Urdu', Tahoma, Arial, sans-serif;
+  line-height: 2.3;
+}
+
+html[lang="ur"] input,
+html[lang="ur"] select,
+html[lang="ur"] textarea,
+html[lang="ur"] button {
+  font-family: 'Jameel Noori Nastaleeq', 'Noto Nastaliq Urdu', Tahoma, Arial, sans-serif;
+}
+
+/* English Language Font Rule */
+html[lang="en"], html[dir="ltr"], .lang-en {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  line-height: 1.6;
+}
+
+html[lang="en"] input,
+html[lang="en"] select,
+html[lang="en"] textarea,
+html[lang="en"] button {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
 }
 
 body {
   @apply antialiased text-slate-800 bg-slate-50;
-  line-height: 2.3;
   letter-spacing: 0.01em;
 }
 
@@ -48,9 +69,4 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: #b45309;
-}
-
-/* Smooth animations */
-.transition-smooth {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
