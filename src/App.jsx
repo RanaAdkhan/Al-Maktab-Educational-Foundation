@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import InstallAppBanner from './components/InstallAppBanner';
 import MatrimonialHeader from './components/MatrimonialHeader';
 import HeroSearch from './components/HeroSearch';
 import StatsCounter from './components/StatsCounter';
@@ -55,6 +56,9 @@ export default function App() {
   return (
     <div className={`min-h-screen bg-slate-50 flex flex-col overflow-x-hidden ${lang === 'ur' ? 'font-urdu' : 'font-sans'}`}>
       
+      {/* Top Mobile App Install Banner */}
+      <InstallAppBanner lang={lang} />
+
       {/* Header with Language Switcher & Navigation */}
       <MatrimonialHeader
         onOpenRegister={() => setIsRegisterOpen(true)}
