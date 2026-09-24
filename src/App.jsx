@@ -3,8 +3,9 @@ import MatrimonialHeader from './components/MatrimonialHeader';
 import HeroSearch from './components/HeroSearch';
 import StatsCounter from './components/StatsCounter';
 import IslamicGuidelines from './components/IslamicGuidelines';
+import ProposalRequestSection from './components/ProposalRequestSection';
+import FeeStructureSection from './components/FeeStructureSection';
 import CasteFilterSection from './components/CasteFilterSection';
-import ProfileCard from './components/ProfileCard';
 import HowItWorks from './components/HowItWorks';
 import AboutSection from './components/AboutSection';
 import WhyChooseMatrimonial from './components/WhyChooseMatrimonial';
@@ -12,30 +13,19 @@ import TestimonialsSection from './components/TestimonialsSection';
 import FAQSection from './components/FAQSection';
 import MatrimonialFooter from './components/MatrimonialFooter';
 import RegisterModal from './components/RegisterModal';
-import DetailModal from './components/DetailModal';
-import SavedProfilesDrawer from './components/SavedProfilesDrawer';
-import { defaultProfiles, ADMIN_PHONE } from './data/matrimonialData';
+import { ADMIN_PHONE } from './data/matrimonialData';
 import { translations } from './data/translations';
-import { Search, MessageCircle, Heart, UserPlus, RotateCcw, Sparkles } from 'lucide-react';
+import { MessageCircle } from 'lucide-react';
 
 export default function App() {
   const [lang, setLang] = useState('ur'); // 'ur' or 'en'
   const t = translations[lang] || translations.ur;
 
-  const [profiles, setProfiles] = useState([]);
-  const [genderFilter, setGenderFilter] = useState('all');
-  const [cityFilter, setCityFilter] = useState('');
-  const [casteFilter, setCasteFilter] = useState('');
-  const [maritalFilter, setMaritalFilter] = useState('');
   const [activeTab, setActiveTab] = useState('home');
+  const [selectedCaste, setSelectedCaste] = useState('');
   
-  // Favorites / Saved profiles
-  const [savedProfiles, setSavedProfiles] = useState([]);
-  const [isSavedDrawerOpen, setIsSavedDrawerOpen] = useState(false);
-
-  // Modals state
+  // Registration Modal state
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
-  const [selectedProfile, setSelectedProfile] = useState(null);
 
   // Sync HTML dir and lang attribute
   useEffect(() => {
@@ -50,101 +40,22 @@ export default function App() {
     }
   }, [lang]);
 
-  // Load profiles from LocalStorage on mount
-  useEffect(() => {
-    try {
-      const stored = localStorage.getItem('humsafar_profiles_v2');
-      if (stored) {
-        setProfiles(JSON.parse(stored));
-      } else {
-        localStorage.setItem('humsafar_profiles_v2', JSON.stringify(defaultProfiles));
-        setProfiles(defaultProfiles);
-      }
-
-      // Load saved / bookmarks
-      const storedSaved = localStorage.getItem('humsafar_saved_profiles');
-      if (storedSaved) {
-        setSavedProfiles(JSON.parse(storedSaved));
-      }
-    } catch (e) {
-      setProfiles(defaultProfiles);
-    }
-  }, []);
-
   const handleToggleLang = () => {
     setLang((prev) => (prev === 'ur' ? 'en' : 'ur'));
   };
 
-  // Save / Toggle bookmark
-  const handleToggleSave = (profile) => {
-    setSavedProfiles((prev) => {
-      let updated;
-      const exists = prev.some((p) => p.id === profile.id);
-      if (exists) {
-        updated = prev.filter((p) => p.id !== profile.id);
-      } else {
-        updated = [...prev, profile];
-      }
-      try {
-        localStorage.setItem('humsafar_saved_profiles', JSON.stringify(updated));
-      } catch (e) {
-        console.error(e);
-      }
-      return updated;
-    });
-  };
-
-  const handleRemoveSaved = (profileId) => {
-    setSavedProfiles((prev) => {
-      const updated = prev.filter((p) => p.id !== profileId);
-      try {
-        localStorage.setItem('humsafar_saved_profiles', JSON.stringify(updated));
-      } catch (e) {
-        console.error(e);
-      }
-      return updated;
-    });
-  };
-
-  // Save to LocalStorage whenever new profile added
-  const handleAddProfile = (newProfile) => {
-    const updated = [newProfile, ...profiles];
-    setProfiles(updated);
-    try {
-      localStorage.setItem('humsafar_profiles_v2', JSON.stringify(updated));
-    } catch (e) {
-      console.error(e);
-    }
-  };
-
-  const handleResetFilters = () => {
-    setGenderFilter('all');
-    setCityFilter('');
-    setCasteFilter('');
-    setMaritalFilter('');
-  };
-
   const handleSelectCaste = (casteName) => {
-    setCasteFilter(casteName);
-    const elem = document.getElementById('profiles');
+    setSelectedCaste(casteName);
+    const elem = document.getElementById('form');
     if (elem) {
       elem.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
-  // Filter logic
-  const filteredProfiles = profiles.filter((p) => {
-    const matchGender = genderFilter === 'all' || p.gender === genderFilter;
-    const matchCity = !cityFilter || p.city?.toLowerCase().includes(cityFilter.trim().toLowerCase());
-    const matchCaste = !casteFilter || p.caste?.toLowerCase().includes(casteFilter.trim().toLowerCase());
-    const matchMarital = !maritalFilter || p.marital?.includes(maritalFilter);
-    return matchGender && matchCity && matchCaste && matchMarital;
-  });
-
   return (
     <div className={`min-h-screen bg-slate-50 flex flex-col overflow-x-hidden ${lang === 'ur' ? 'font-urdu' : 'font-sans'}`}>
       
-      {/* Header with Language Switcher & Shortlist / Saved proposals */}
+      {/* Header with Language Switcher & Navigation */}
       <MatrimonialHeader
         onOpenRegister={() => setIsRegisterOpen(true)}
         onNavigate={(tab) => setActiveTab(tab)}
@@ -152,23 +63,11 @@ export default function App() {
         lang={lang}
         onToggleLang={handleToggleLang}
         t={t}
-        savedCount={savedProfiles.length}
-        onOpenSaved={() => setIsSavedDrawerOpen(true)}
       />
 
-      {/* Hero & Quick Search */}
+      {/* Hero & Personalized Matchmaking Overview */}
       <div id="home">
         <HeroSearch
-          genderFilter={genderFilter}
-          setGenderFilter={setGenderFilter}
-          cityFilter={cityFilter}
-          setCityFilter={setCityFilter}
-          casteFilter={casteFilter}
-          setCasteFilter={setCasteFilter}
-          maritalFilter={maritalFilter}
-          setMaritalFilter={setMaritalFilter}
-          onResetFilters={handleResetFilters}
-          totalProfilesCount={profiles.length}
           onOpenRegister={() => setIsRegisterOpen(true)}
           lang={lang}
           t={t}
@@ -181,101 +80,32 @@ export default function App() {
       {/* Islamic Guidelines & Quranic Teachings on Nikah */}
       <IslamicGuidelines lang={lang} t={t} />
 
-      {/* Caste / Baradari Quick Filter Section */}
+      {/* Comprehensive Online Biodata Form Section (On-Page) */}
+      <ProposalRequestSection
+        onAddProfile={() => {}}
+        lang={lang}
+        t={t}
+      />
+
+      {/* 5,000 PKR Fee Structure & Matchmaking Package */}
+      <FeeStructureSection
+        onOpenRegister={() => setIsRegisterOpen(true)}
+        lang={lang}
+        t={t}
+      />
+
+      {/* 3 Step Matrimonial Process (Submit Biodata + 5,000 Fee -> Search & Verify -> Family Meeting) */}
+      <HowItWorks lang={lang} onOpenRegister={() => setIsRegisterOpen(true)} />
+
+      {/* Caste / Baradari Finder Section */}
       <div id="castes">
         <CasteFilterSection
-          selectedCaste={casteFilter}
+          selectedCaste={selectedCaste}
           onSelectCaste={handleSelectCaste}
           lang={lang}
           t={t}
         />
       </div>
-
-      {/* Main Profiles Grid */}
-      <main id="profiles" className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-8 sm:py-14 flex-grow w-full">
-        
-        {/* Results Count bar */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 sm:mb-8 pb-3 sm:pb-4 border-b border-slate-200 gap-3">
-          <div>
-            <h3 className="text-lg sm:text-2xl font-black text-slate-900 flex items-center gap-2">
-              <Heart className="w-4 h-4 sm:w-5 sm:h-5 text-amber-500 fill-amber-500" />
-              <span>{t.availableProfilesHeading}</span>
-              <span className="text-[10px] sm:text-xs bg-slate-900 text-amber-400 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full font-bold">
-                {filteredProfiles.length} {t.resultsCount}
-              </span>
-            </h3>
-
-            {casteFilter && (
-              <p className="text-[11px] sm:text-xs text-slate-600 mt-1 flex items-center gap-2">
-                <span>{t.selectedCasteLabel} <strong className="text-amber-700">{casteFilter}</strong></span>
-                <button
-                  onClick={() => setCasteFilter('')}
-                  className="text-rose-600 underline font-bold"
-                >
-                  ({lang === 'ur' ? 'فلٹر ہٹائیں' : 'Clear'})
-                </button>
-              </p>
-            )}
-          </div>
-
-          <div className="flex items-center gap-2 sm:gap-3">
-            {casteFilter || cityFilter || genderFilter !== 'all' ? (
-              <button
-                onClick={handleResetFilters}
-                className="text-[11px] sm:text-xs font-bold text-slate-600 hover:text-slate-900 flex items-center gap-1 bg-white border px-2.5 py-1.5 rounded-xl shadow-sm"
-              >
-                <RotateCcw className="w-3.5 h-3.5" />
-                <span>{t.btnReset}</span>
-              </button>
-            ) : null}
-
-            <button
-              onClick={() => setIsRegisterOpen(true)}
-              className="bg-slate-900 hover:bg-slate-800 text-amber-400 px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl text-[11px] sm:text-xs font-bold flex items-center gap-1.5 shadow-md"
-            >
-              <UserPlus className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-              <span>{t.btnRegister}</span>
-            </button>
-          </div>
-        </div>
-
-        {/* Grid or Empty Notice */}
-        {filteredProfiles.length === 0 ? (
-          <div className="text-center py-12 sm:py-16 bg-white rounded-2xl sm:rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-sm">
-            <Search className="w-10 h-10 sm:w-12 sm:h-12 text-slate-300 mx-auto mb-3" />
-            <p className="text-lg sm:text-xl font-bold text-slate-700">
-              {t.noProfilesFound}
-            </p>
-            <p className="text-[11px] sm:text-sm text-slate-400 mt-1">
-              {t.noProfilesAdvice}
-            </p>
-            <button
-              onClick={handleResetFilters}
-              className="mt-4 px-5 sm:px-6 py-2 sm:py-2.5 bg-slate-900 text-amber-400 rounded-xl text-xs font-bold shadow-md"
-            >
-              {t.btnViewAll}
-            </button>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-            {filteredProfiles.map((profile) => (
-              <ProfileCard
-                key={profile.id}
-                profile={profile}
-                onViewDetail={(p) => setSelectedProfile(p)}
-                isSaved={savedProfiles.some((s) => s.id === profile.id)}
-                onToggleSave={handleToggleSave}
-                lang={lang}
-                t={t}
-              />
-            ))}
-          </div>
-        )}
-
-      </main>
-
-      {/* 3 Step Matrimonial Process */}
-      <HowItWorks lang={lang} onOpenRegister={() => setIsRegisterOpen(true)} />
 
       {/* About Us / Foundation Section */}
       <div id="about">
@@ -300,38 +130,18 @@ export default function App() {
         <MatrimonialFooter lang={lang} t={t} />
       </div>
 
-      {/* Registration Modal */}
+      {/* Comprehensive Registration Modal */}
       <RegisterModal
         isOpen={isRegisterOpen}
         onClose={() => setIsRegisterOpen(false)}
-        onAddProfile={handleAddProfile}
+        onAddProfile={() => {}}
         lang={lang}
         t={t}
       />
 
-      {/* Details & WhatsApp Modal */}
-      <DetailModal
-        isOpen={!!selectedProfile}
-        onClose={() => setSelectedProfile(null)}
-        profile={selectedProfile}
-        lang={lang}
-        t={t}
-      />
-
-      {/* Saved Profiles / Shortlist Drawer */}
-      <SavedProfilesDrawer
-        isOpen={isSavedDrawerOpen}
-        onClose={() => setIsSavedDrawerOpen(false)}
-        savedProfiles={savedProfiles}
-        onRemoveSaved={handleRemoveSaved}
-        onViewDetail={(p) => setSelectedProfile(p)}
-        lang={lang}
-        t={t}
-      />
-
-      {/* Floating WhatsApp Button */}
+      {/* Floating WhatsApp Helpline Button */}
       <a
-        href={`https://wa.me/${ADMIN_PHONE}?text=${encodeURIComponent(lang === 'ur' ? 'السلام علیکم! مجھے ہمسفر رشتہ سنٹر کے متعلق معلومات حاصل کرنی ہیں۔' : 'Hello! I would like to get information regarding Humsafar Rishta Centre.')}`}
+        href={`https://wa.me/${ADMIN_PHONE}?text=${encodeURIComponent(lang === 'ur' ? 'السلام علیکم! مجھے ہم سفر رشتہ سنٹر میں کوائف درج کروانے اور فیس کی معلومات حاصل کرنی ہیں۔' : 'Hello! I would like information regarding matrimonial registration and fees.')}`}
         target="_blank"
         rel="noopener noreferrer"
         className={`fixed bottom-4 sm:bottom-6 ${lang === 'ur' ? 'left-4 sm:left-6' : 'right-4 sm:right-6'} z-40 bg-emerald-600 hover:bg-emerald-700 text-white p-3 sm:p-4 rounded-full shadow-2xl hover:scale-110 active:scale-95 transition-all flex items-center justify-center group border-2 border-white/40`}

@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
-import { UserPlus, MessageCircle, PhoneCall, Menu, X, Home, Info, Users, MapPin, Search, Languages, Heart } from 'lucide-react';
-import { siteConfig, ADMIN_PHONE, LANDLINE_PHONE } from '../data/matrimonialData';
+import { UserPlus, MessageCircle, PhoneCall, Menu, X, Home, Info, Users, MapPin, FileText, Languages, CreditCard } from 'lucide-react';
+import { siteConfig, ADMIN_PHONE, LANDLINE_PHONE, REGISTRATION_FEE } from '../data/matrimonialData';
 
-export default function MatrimonialHeader({ onOpenRegister, onNavigate, activeTab, lang, onToggleLang, t, savedCount, onOpenSaved }) {
+export default function MatrimonialHeader({ onOpenRegister, onNavigate, activeTab, lang, onToggleLang, t }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navLinks = [
     { id: 'home', label: t.navHome, icon: Home },
+    { id: 'form', label: t.navForm, icon: FileText },
+    { id: 'pricing', label: t.navPricing, icon: CreditCard },
     { id: 'about', label: t.navAbout, icon: Info },
     { id: 'castes', label: t.navCastes, icon: Users },
-    { id: 'profiles', label: t.navProfiles, icon: Search },
     { id: 'contact', label: t.navContact, icon: MapPin },
   ];
 
@@ -84,20 +85,6 @@ export default function MatrimonialHeader({ onOpenRegister, onNavigate, activeTa
               <span>{t.langLabel}</span>
             </button>
 
-            {/* Saved Proposals Heart Button */}
-            <button
-              onClick={onOpenSaved}
-              className="relative p-1.5 sm:p-2 rounded-xl bg-white/10 hover:bg-white/20 text-rose-400 border border-white/10 transition-all"
-              title="Saved Proposals / پسندیدہ رشتے"
-            >
-              <Heart className="w-4 h-4 sm:w-5 sm:h-5 fill-rose-500/30 text-rose-400" />
-              {savedCount > 0 && (
-                <span className="absolute -top-1 -right-1 bg-rose-600 text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center shadow-xs">
-                  {savedCount}
-                </span>
-              )}
-            </button>
-
             {/* WhatsApp (Desktop/Tablet) */}
             <a
               href={`https://wa.me/${ADMIN_PHONE}?text=${encodeURIComponent(lang === 'ur' ? 'السلام علیکم! مجھے ہمسفر رشتہ سنٹر کے متعلق معلومات حاصل کرنی ہیں۔' : 'Hello! I would like to get information regarding Humsafar Rishta Centre.')}`}
@@ -109,14 +96,14 @@ export default function MatrimonialHeader({ onOpenRegister, onNavigate, activeTa
               <span dir="ltr" className="font-sans font-bold">{siteConfig.whatsapp}</span>
             </a>
 
-            {/* Register Button */}
+            {/* Register / Fill Biodata Button */}
             <button
               onClick={onOpenRegister}
               className="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-950 font-black px-2.5 sm:px-4 py-1 sm:py-2 rounded-lg sm:rounded-xl shadow-md text-[11px] sm:text-xs flex items-center gap-1 hover:scale-105 transition-all"
             >
               <UserPlus className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">{t.btnRegister}</span>
-              <span className="sm:hidden">{lang === 'ur' ? 'رجسٹریشن' : 'Register'}</span>
+              <span className="hidden sm:inline">{lang === 'ur' ? 'کوائف فارم (فیس 5,000)' : 'Submit Biodata (Rs. 5,000)'}</span>
+              <span className="sm:hidden">{lang === 'ur' ? 'فارم پُر کریں' : 'Biodata Form'}</span>
             </button>
 
             {/* Mobile Menu Button */}
@@ -150,17 +137,6 @@ export default function MatrimonialHeader({ onOpenRegister, onNavigate, activeTa
           })}
 
           <div className="pt-3 border-t border-slate-800 flex flex-col gap-2">
-            <button
-              onClick={() => {
-                onOpenSaved();
-                setMobileMenuOpen(false);
-              }}
-              className="flex items-center justify-between p-2.5 rounded-xl bg-rose-950/40 text-rose-300 font-bold text-xs border border-rose-500/30"
-            >
-              <span>{lang === 'ur' ? 'پسندیدہ رشتے (شارٹ لسٹ)' : 'Saved Proposals'}</span>
-              <span className="bg-rose-600 text-white text-[10px] px-2 py-0.5 rounded-full font-bold">{savedCount}</span>
-            </button>
-
             <button
               onClick={() => {
                 onToggleLang();
