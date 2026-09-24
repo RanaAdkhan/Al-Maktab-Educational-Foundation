@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { UserPlus, MessageCircle, PhoneCall, Menu, X, Home, Info, Users, MapPin, Search, Languages } from 'lucide-react';
+import { UserPlus, MessageCircle, PhoneCall, Menu, X, Home, Info, Users, MapPin, Search, Languages, Heart } from 'lucide-react';
 import { siteConfig, ADMIN_PHONE, LANDLINE_PHONE } from '../data/matrimonialData';
 
-export default function MatrimonialHeader({ onOpenRegister, onNavigate, activeTab, lang, onToggleLang, t }) {
+export default function MatrimonialHeader({ onOpenRegister, onNavigate, activeTab, lang, onToggleLang, t, savedCount, onOpenSaved }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navLinks = [
@@ -84,6 +84,20 @@ export default function MatrimonialHeader({ onOpenRegister, onNavigate, activeTa
               <span>{t.langLabel}</span>
             </button>
 
+            {/* Saved Proposals Heart Button */}
+            <button
+              onClick={onOpenSaved}
+              className="relative p-1.5 sm:p-2 rounded-xl bg-white/10 hover:bg-white/20 text-rose-400 border border-white/10 transition-all"
+              title="Saved Proposals / پسندیدہ رشتے"
+            >
+              <Heart className="w-4 h-4 sm:w-5 sm:h-5 fill-rose-500/30 text-rose-400" />
+              {savedCount > 0 && (
+                <span className="absolute -top-1 -right-1 bg-rose-600 text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center shadow-xs">
+                  {savedCount}
+                </span>
+              )}
+            </button>
+
             {/* WhatsApp (Desktop/Tablet) */}
             <a
               href={`https://wa.me/${ADMIN_PHONE}?text=${encodeURIComponent(lang === 'ur' ? 'السلام علیکم! مجھے ہمسفر رشتہ سنٹر کے متعلق معلومات حاصل کرنی ہیں۔' : 'Hello! I would like to get information regarding Humsafar Rishta Centre.')}`}
@@ -136,6 +150,17 @@ export default function MatrimonialHeader({ onOpenRegister, onNavigate, activeTa
           })}
 
           <div className="pt-3 border-t border-slate-800 flex flex-col gap-2">
+            <button
+              onClick={() => {
+                onOpenSaved();
+                setMobileMenuOpen(false);
+              }}
+              className="flex items-center justify-between p-2.5 rounded-xl bg-rose-950/40 text-rose-300 font-bold text-xs border border-rose-500/30"
+            >
+              <span>{lang === 'ur' ? 'پسندیدہ رشتے (شارٹ لسٹ)' : 'Saved Proposals'}</span>
+              <span className="bg-rose-600 text-white text-[10px] px-2 py-0.5 rounded-full font-bold">{savedCount}</span>
+            </button>
+
             <button
               onClick={() => {
                 onToggleLang();

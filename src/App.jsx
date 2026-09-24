@@ -1,16 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import MatrimonialHeader from './components/MatrimonialHeader';
 import HeroSearch from './components/HeroSearch';
-import AboutSection from './components/AboutSection';
+import StatsCounter from './components/StatsCounter';
+import IslamicGuidelines from './components/IslamicGuidelines';
 import CasteFilterSection from './components/CasteFilterSection';
 import ProfileCard from './components/ProfileCard';
+import HowItWorks from './components/HowItWorks';
+import AboutSection from './components/AboutSection';
+import WhyChooseMatrimonial from './components/WhyChooseMatrimonial';
+import TestimonialsSection from './components/TestimonialsSection';
+import FAQSection from './components/FAQSection';
+import MatrimonialFooter from './components/MatrimonialFooter';
 import RegisterModal from './components/RegisterModal';
 import DetailModal from './components/DetailModal';
-import WhyChooseMatrimonial from './components/WhyChooseMatrimonial';
-import MatrimonialFooter from './components/MatrimonialFooter';
+import SavedProfilesDrawer from './components/SavedProfilesDrawer';
 import { defaultProfiles, ADMIN_PHONE } from './data/matrimonialData';
 import { translations } from './data/translations';
-import { Search, MessageCircle, Heart, UserPlus, RotateCcw } from 'lucide-react';
+import { Search, MessageCircle, Heart, UserPlus, RotateCcw, Sparkles } from 'lucide-react';
 
 export default function App() {
   const [lang, setLang] = useState('ur'); // 'ur' or 'en'
@@ -23,6 +29,10 @@ export default function App() {
   const [maritalFilter, setMaritalFilter] = useState('');
   const [activeTab, setActiveTab] = useState('home');
   
+  // Favorites / Saved profiles
+  const [savedProfiles, setSavedProfiles] = useState([]);
+  const [isSavedDrawerOpen, setIsSavedDrawerOpen] = useState(false);
+
   // Modals state
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
   const [selectedProfile, setSelectedProfile] = useState(null);
@@ -50,6 +60,12 @@ export default function App() {
         localStorage.setItem('humsafar_profiles_v2', JSON.stringify(defaultProfiles));
         setProfiles(defaultProfiles);
       }
+
+      // Load saved / bookmarks
+      const storedSaved = localStorage.getItem('humsafar_saved_profiles');
+      if (storedSaved) {
+        setSavedProfiles(JSON.parse(storedSaved));
+      }
     } catch (e) {
       setProfiles(defaultProfiles);
     }
@@ -57,6 +73,37 @@ export default function App() {
 
   const handleToggleLang = () => {
     setLang((prev) => (prev === 'ur' ? 'en' : 'ur'));
+  };
+
+  // Save / Toggle bookmark
+  const handleToggleSave = (profile) => {
+    setSavedProfiles((prev) => {
+      let updated;
+      const exists = prev.some((p) => p.id === profile.id);
+      if (exists) {
+        updated = prev.filter((p) => p.id !== profile.id);
+      } else {
+        updated = [...prev, profile];
+      }
+      try {
+        localStorage.setItem('humsafar_saved_profiles', JSON.stringify(updated));
+      } catch (e) {
+        console.error(e);
+      }
+      return updated;
+    });
+  };
+
+  const handleRemoveSaved = (profileId) => {
+    setSavedProfiles((prev) => {
+      const updated = prev.filter((p) => p.id !== profileId);
+      try {
+        localStorage.setItem('humsafar_saved_profiles', JSON.stringify(updated));
+      } catch (e) {
+        console.error(e);
+      }
+      return updated;
+    });
   };
 
   // Save to LocalStorage whenever new profile added
@@ -97,7 +144,7 @@ export default function App() {
   return (
     <div className={`min-h-screen bg-slate-50 flex flex-col overflow-x-hidden ${lang === 'ur' ? 'font-urdu' : 'font-sans'}`}>
       
-      {/* Header with Language Switcher */}
+      {/* Header with Language Switcher & Shortlist / Saved proposals */}
       <MatrimonialHeader
         onOpenRegister={() => setIsRegisterOpen(true)}
         onNavigate={(tab) => setActiveTab(tab)}
@@ -105,6 +152,8 @@ export default function App() {
         lang={lang}
         onToggleLang={handleToggleLang}
         t={t}
+        savedCount={savedProfiles.length}
+        onOpenSaved={() => setIsSavedDrawerOpen(true)}
       />
 
       {/* Hero & Quick Search */}
@@ -126,20 +175,21 @@ export default function App() {
         />
       </div>
 
-      {/* About Us / Foundation Section */}
-      <AboutSection
-        onOpenRegister={() => setIsRegisterOpen(true)}
-        lang={lang}
-        t={t}
-      />
+      {/* Live Verified Platform Stats Bar */}
+      <StatsCounter lang={lang} />
+
+      {/* Islamic Guidelines & Quranic Teachings on Nikah */}
+      <IslamicGuidelines lang={lang} t={t} />
 
       {/* Caste / Baradari Quick Filter Section */}
-      <CasteFilterSection
-        selectedCaste={casteFilter}
-        onSelectCaste={handleSelectCaste}
-        lang={lang}
-        t={t}
-      />
+      <div id="castes">
+        <CasteFilterSection
+          selectedCaste={casteFilter}
+          onSelectCaste={handleSelectCaste}
+          lang={lang}
+          t={t}
+        />
+      </div>
 
       {/* Main Profiles Grid */}
       <main id="profiles" className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-8 sm:py-14 flex-grow w-full">
@@ -213,6 +263,8 @@ export default function App() {
                 key={profile.id}
                 profile={profile}
                 onViewDetail={(p) => setSelectedProfile(p)}
+                isSaved={savedProfiles.some((s) => s.id === profile.id)}
+                onToggleSave={handleToggleSave}
                 lang={lang}
                 t={t}
               />
@@ -222,8 +274,26 @@ export default function App() {
 
       </main>
 
+      {/* 3 Step Matrimonial Process */}
+      <HowItWorks lang={lang} onOpenRegister={() => setIsRegisterOpen(true)} />
+
+      {/* About Us / Foundation Section */}
+      <div id="about">
+        <AboutSection
+          onOpenRegister={() => setIsRegisterOpen(true)}
+          lang={lang}
+          t={t}
+        />
+      </div>
+
       {/* Why Choose Us */}
       <WhyChooseMatrimonial lang={lang} t={t} />
+
+      {/* Testimonials & Real Family Reviews */}
+      <TestimonialsSection lang={lang} />
+
+      {/* FAQ Section */}
+      <FAQSection lang={lang} />
 
       {/* Footer / Contact */}
       <div id="contact">
@@ -244,6 +314,17 @@ export default function App() {
         isOpen={!!selectedProfile}
         onClose={() => setSelectedProfile(null)}
         profile={selectedProfile}
+        lang={lang}
+        t={t}
+      />
+
+      {/* Saved Profiles / Shortlist Drawer */}
+      <SavedProfilesDrawer
+        isOpen={isSavedDrawerOpen}
+        onClose={() => setIsSavedDrawerOpen(false)}
+        savedProfiles={savedProfiles}
+        onRemoveSaved={handleRemoveSaved}
+        onViewDetail={(p) => setSelectedProfile(p)}
         lang={lang}
         t={t}
       />
