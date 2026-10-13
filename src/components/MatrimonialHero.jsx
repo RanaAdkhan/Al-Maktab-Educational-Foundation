@@ -10,7 +10,6 @@ export default function MatrimonialHero({
   casteFilter,
   setCasteFilter,
   onResetFilters,
-  onSelectCaste,
   totalProfilesCount,
   onOpenRegister,
   lang,
@@ -42,52 +41,40 @@ export default function MatrimonialHero({
   ];
 
   return (
-    <section className="relative bg-gradient-to-b from-[#063c2b] via-[#094834] to-[#0d563e] text-white pt-8 pb-12 sm:pt-12 sm:pb-16 px-4 overflow-hidden border-b-4 border-amber-500 shadow-2xl">
-      {/* Subtle luxury pattern background */}
-      <div className="absolute inset-0 opacity-5 pointer-events-none bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:16px_16px]" />
-
-      <div className="relative max-w-5xl mx-auto text-center z-10">
+    <section className="bg-[#f8f6f1] text-[#20231f] pt-8 pb-12 sm:pt-14 sm:pb-16 px-4 border-b border-[#dedfd9]">
+      <div className="max-w-5xl mx-auto text-center">
         
-        {/* Top Trust Pill */}
-        <div className="inline-flex items-center gap-2 bg-amber-400/20 border border-amber-300/40 text-amber-300 px-3.5 py-1 rounded-full text-xs sm:text-sm font-bold backdrop-blur-md mb-4 shadow-sm">
-          <Sparkles className="w-4 h-4 text-amber-300 animate-spin-slow" />
-          <span>{isUrdu ? "المکتب ایجوکیشنل فاؤنڈیشن لاہور • 2014 سے بااعتماد ادارہ" : "Al-Maktab Educational Foundation • Trusted Since 2014"}</span>
-        </div>
-
-        {/* Main Headline */}
-        <h1 className="text-2xl sm:text-4xl md:text-5xl font-black text-white tracking-tight leading-snug sm:leading-tight mb-3 drop-shadow-md">
-          {isUrdu ? (
-            <>
-              شریف اور دیندار خاندانوں کے <span className="text-amber-400 underline decoration-amber-400/60 decoration-wavy">باوقار رشتے</span>
-            </>
-          ) : (
-            <>
-              Dignified Matrimonial Matches for <span className="text-amber-400">Noble Families</span>
-            </>
-          )}
-        </h1>
-
-        <p className="text-xs sm:text-base text-emerald-100/90 font-medium max-w-2xl mx-auto mb-6 sm:mb-8 leading-relaxed">
-          {isUrdu
-            ? "سنتِ نبوی ﷺ کے مطابق تصدیق شدہ خاندانی کوائف۔ اپنی مطلوبہ برادری، تعلیم اور شہر کے مطابق فوری رشتہ تلاش کریں۔"
-            : "Verified family proposals adhering strictly to Islamic values. Find suitable matches by caste, education, and city."}
+        {/* Preheader badge */}
+        <p className="text-xs sm:text-sm font-bold tracking-widest text-[#98742d] uppercase mb-2">
+          {isUrdu ? "المکتب ایجوکیشنل فاؤنڈیشن • بااعتماد خاندانی ادارہ" : "Al-Maktab Educational Foundation • Trusted Since 2014"}
         </p>
 
-        {/* Main Interactive Search Card */}
-        <div className="bg-white text-slate-900 rounded-3xl p-4 sm:p-6 shadow-2xl border-2 border-amber-400/80 max-w-4xl mx-auto backdrop-blur-xl">
+        {/* Main Heading - Clean, Dignified, Georgia & Nastaleeq */}
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-[#063c2b] tracking-tight leading-snug sm:leading-tight mb-3 font-serif">
+          {isUrdu ? "شریف اور دیندار خاندانوں کے باوقار رشتے" : "Dignified Family Matrimonial Services"}
+        </h1>
+
+        <p className="text-sm sm:text-base text-[#626c65] font-normal max-w-2xl mx-auto mb-8 sm:mb-10 leading-relaxed">
+          {isUrdu
+            ? "سنتِ نبوی ﷺ کے مطابق تصدیق شدہ خاندانی کوائف۔ اپنی مطلوبہ برادری، تعلیم اور شہر کے مطابق باآسانی رشتہ تلاش کریں۔"
+            : "Verified family proposals adhering strictly to Islamic values and privacy. Easily find matches by caste, education, and city."}
+        </p>
+
+        {/* Aafaq.pk Style Pure White Search Box */}
+        <div className="bg-white text-[#20231f] rounded-2xl p-5 sm:p-7 shadow-lg shadow-black/5 border border-[#dedfd9] border-t-4 border-t-[#b89446] max-w-4xl mx-auto">
           
-          <form onSubmit={handleSearchSubmit} className="space-y-4">
-            <div className="grid grid-cols-1 sm:grid-cols-12 gap-3 items-end">
+          <form onSubmit={handleSearchSubmit}>
+            <div className="grid grid-cols-1 sm:grid-cols-12 gap-3.5 items-end">
               
               {/* 1. Gender */}
               <div className="sm:col-span-3 text-right">
-                <label className="block text-xs font-bold text-slate-700 mb-1">
+                <label className="block text-xs font-bold text-[#20231f] mb-1.5">
                   {isUrdu ? "مجھے رشتہ چاہیے:" : "Looking For:"}
                 </label>
                 <select
                   value={genderFilter}
                   onChange={(e) => setGenderFilter(e.target.value)}
-                  className="w-full border-2 border-slate-200 rounded-xl py-2.5 px-3 bg-slate-50 focus:bg-white focus:border-emerald-700 outline-none text-xs sm:text-sm font-bold transition-all text-slate-800"
+                  className="w-full border border-[#dedfd9] rounded-xl py-2.5 px-3 bg-[#f8f6f1] focus:bg-white focus:border-[#0f5132] outline-none text-xs sm:text-sm font-bold transition-all text-[#20231f]"
                 >
                   <option value="all">{isUrdu ? "تمام رشتے (سب)" : "All Profiles"}</option>
                   <option value="عورت">{isUrdu ? "👰 دلہن (لڑکی)" : "Bride"}</option>
@@ -97,7 +84,7 @@ export default function MatrimonialHero({
 
               {/* 2. Caste / Baradari */}
               <div className="sm:col-span-3 text-right">
-                <label className="block text-xs font-bold text-slate-700 mb-1">
+                <label className="block text-xs font-bold text-[#20231f] mb-1.5">
                   {isUrdu ? "ذات / برادری:" : "Caste / Baradari:"}
                 </label>
                 <input
@@ -105,13 +92,13 @@ export default function MatrimonialHero({
                   placeholder={isUrdu ? "مثلاً راجپوت، جٹ، اعوان..." : "e.g. Rajput, Jatt, Awan"}
                   value={casteFilter}
                   onChange={(e) => setCasteFilter(e.target.value)}
-                  className="w-full border-2 border-slate-200 rounded-xl py-2.5 px-3 bg-slate-50 focus:bg-white focus:border-emerald-700 outline-none text-xs sm:text-sm font-bold transition-all text-slate-800 placeholder:text-slate-400"
+                  className="w-full border border-[#dedfd9] rounded-xl py-2.5 px-3 bg-[#f8f6f1] focus:bg-white focus:border-[#0f5132] outline-none text-xs sm:text-sm font-bold transition-all text-[#20231f] placeholder:text-[#9ca3af]"
                 />
               </div>
 
               {/* 3. City */}
               <div className="sm:col-span-3 text-right">
-                <label className="block text-xs font-bold text-slate-700 mb-1">
+                <label className="block text-xs font-bold text-[#20231f] mb-1.5">
                   {isUrdu ? "شہر:" : "City:"}
                 </label>
                 <input
@@ -119,17 +106,17 @@ export default function MatrimonialHero({
                   placeholder={isUrdu ? "مثلاً لاہور، اسلام آباد..." : "e.g. Lahore, Islamabad"}
                   value={cityFilter}
                   onChange={(e) => setCityFilter(e.target.value)}
-                  className="w-full border-2 border-slate-200 rounded-xl py-2.5 px-3 bg-slate-50 focus:bg-white focus:border-emerald-700 outline-none text-xs sm:text-sm font-bold transition-all text-slate-800 placeholder:text-slate-400"
+                  className="w-full border border-[#dedfd9] rounded-xl py-2.5 px-3 bg-[#f8f6f1] focus:bg-white focus:border-[#0f5132] outline-none text-xs sm:text-sm font-bold transition-all text-[#20231f] placeholder:text-[#9ca3af]"
                 />
               </div>
 
-              {/* 4. Action Button */}
+              {/* 4. Action Search Button */}
               <div className="sm:col-span-3 flex gap-2">
                 <button
                   type="submit"
-                  className="w-full bg-gradient-to-r from-emerald-800 to-emerald-950 hover:from-emerald-900 hover:to-slate-900 text-amber-300 font-black py-2.5 px-4 rounded-xl text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg transition-all hover:scale-[1.02] cursor-pointer"
+                  className="w-full bg-[#063c2b] hover:bg-[#04281c] text-white font-bold py-2.5 px-4 rounded-xl text-xs sm:text-sm flex items-center justify-center gap-2 shadow-sm transition-all cursor-pointer"
                 >
-                  <Search className="w-4 h-4 text-amber-400" />
+                  <Search className="w-4 h-4 text-[#b89446]" />
                   <span>{isUrdu ? "رشتہ تلاش کریں" : "Search"}</span>
                 </button>
 
@@ -137,7 +124,7 @@ export default function MatrimonialHero({
                   <button
                     type="button"
                     onClick={onResetFilters}
-                    className="p-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl transition-all"
+                    className="p-2.5 bg-[#f8f6f1] hover:bg-slate-200 text-[#20231f] rounded-xl transition-all border border-[#dedfd9]"
                     title={isUrdu ? "تمام فلٹرز ختم کریں" : "Reset"}
                   >
                     <RotateCcw className="w-4 h-4" />
@@ -148,18 +135,18 @@ export default function MatrimonialHero({
             </div>
           </form>
 
-          {/* Quick Caste Badges */}
-          <div className="mt-4 pt-3 border-t border-slate-100 text-right">
-            <div className="flex items-center justify-between flex-wrap gap-2 mb-2">
-              <span className="text-[11px] sm:text-xs font-bold text-slate-600 flex items-center gap-1.5">
-                <Filter className="w-3.5 h-3.5 text-emerald-800" />
+          {/* Quick Caste Badges - Clean White Styling */}
+          <div className="mt-5 pt-4 border-t border-[#dedfd9] text-right">
+            <div className="flex items-center justify-between flex-wrap gap-2 mb-2.5">
+              <span className="text-[11px] sm:text-xs font-bold text-[#626c65] flex items-center gap-1.5">
+                <Filter className="w-3.5 h-3.5 text-[#0f5132]" />
                 <span>{isUrdu ? "پاپولر برادریاں (فوری کلک کریں):" : "Popular Castes:"}</span>
               </span>
 
               <button
                 type="button"
                 onClick={onOpenRegister}
-                className="text-[11px] sm:text-xs font-bold text-emerald-800 hover:text-emerald-950 underline flex items-center gap-1"
+                className="text-[11px] sm:text-xs font-bold text-[#063c2b] hover:underline flex items-center gap-1"
               >
                 <span>{isUrdu ? "+ نیا رشتہ درج کروائیں (فیس: 5,000)" : "+ Register a Rishta (Fee: 5,000)"}</span>
               </button>
@@ -181,10 +168,10 @@ export default function MatrimonialHero({
                         if (elem) elem.scrollIntoView({ behavior: 'smooth' });
                       }
                     }}
-                    className={`text-xs px-2.5 py-1 rounded-lg font-bold transition-all cursor-pointer ${
+                    className={`text-xs px-3 py-1.5 rounded-lg font-bold transition-all cursor-pointer ${
                       isSelected
-                        ? 'bg-emerald-900 text-amber-300 shadow-sm scale-105'
-                        : 'bg-slate-100 hover:bg-emerald-50 text-slate-700 hover:text-emerald-900 border border-slate-200'
+                        ? 'bg-[#063c2b] text-white shadow-sm'
+                        : 'bg-white hover:bg-[#edf4ef] text-[#20231f] hover:text-[#063c2b] border border-[#dedfd9]'
                     }`}
                   >
                     {caste}
@@ -196,25 +183,25 @@ export default function MatrimonialHero({
 
         </div>
 
-        {/* 3 High-Trust Badges */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-4 mt-6 sm:mt-8 max-w-4xl mx-auto text-xs text-emerald-100">
-          <div className="flex items-center justify-center gap-2 bg-emerald-950/50 border border-emerald-400/20 py-2 px-3 rounded-xl backdrop-blur-sm">
-            <ShieldCheck className="w-4 h-4 text-amber-400 shrink-0" />
+        {/* 4 Clean Trust Badges */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-4 mt-6 sm:mt-8 max-w-4xl mx-auto text-xs text-[#20231f]">
+          <div className="flex items-center justify-center gap-2 bg-white border border-[#dedfd9] py-2.5 px-3 rounded-xl shadow-xs">
+            <ShieldCheck className="w-4 h-4 text-[#0f5132] shrink-0" />
             <span className="font-bold">{isUrdu ? "100% تصدیق شدہ کوائف" : "100% Verified"}</span>
           </div>
 
-          <div className="flex items-center justify-center gap-2 bg-emerald-950/50 border border-emerald-400/20 py-2 px-3 rounded-xl backdrop-blur-sm">
-            <CheckCircle2 className="w-4 h-4 text-amber-400 shrink-0" />
+          <div className="flex items-center justify-center gap-2 bg-white border border-[#dedfd9] py-2.5 px-3 rounded-xl shadow-xs">
+            <CheckCircle2 className="w-4 h-4 text-[#0f5132] shrink-0" />
             <span className="font-bold">{isUrdu ? "مکمل خاندانی رازداری" : "100% Confidential"}</span>
           </div>
 
-          <div className="flex items-center justify-center gap-2 bg-emerald-950/50 border border-emerald-400/20 py-2 px-3 rounded-xl backdrop-blur-sm">
-            <Sparkles className="w-4 h-4 text-amber-400 shrink-0" />
+          <div className="flex items-center justify-center gap-2 bg-white border border-[#dedfd9] py-2.5 px-3 rounded-xl shadow-xs">
+            <Sparkles className="w-4 h-4 text-[#b89446] shrink-0" />
             <span className="font-bold">{isUrdu ? "فیس: صرف 5,000 روپے" : "Fee: PKR 5,000"}</span>
           </div>
 
-          <div className="flex items-center justify-center gap-2 bg-emerald-950/50 border border-emerald-400/20 py-2 px-3 rounded-xl backdrop-blur-sm">
-            <PhoneCall className="w-4 h-4 text-amber-400 shrink-0" />
+          <div className="flex items-center justify-center gap-2 bg-white border border-[#dedfd9] py-2.5 px-3 rounded-xl shadow-xs">
+            <PhoneCall className="w-4 h-4 text-[#0f5132] shrink-0" />
             <span className="font-bold">{isUrdu ? "0325 1013131 ہیلپ لائن" : "Direct Helpline"}</span>
           </div>
         </div>

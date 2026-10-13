@@ -1,30 +1,10 @@
 import React from 'react';
-import { Eye, User, Heart, Share2, ShieldCheck, CheckCircle2, Sparkles, MessageCircle } from 'lucide-react';
+import { Eye, User, Heart, ShieldCheck, MessageCircle } from 'lucide-react';
 import { ADMIN_PHONE } from '../data/matrimonialData';
 
 export default function ProfileCard({ profile, onViewDetail, isSaved, onToggleSave, lang, t }) {
   const isFemale = profile.gender === 'عورت';
   const isUrdu = lang === 'ur';
-
-  // Gender specific theme styles
-  const cardBorderClass = isFemale ? 'glow-card-bride' : 'glow-card-groom';
-  const beamClass = isFemale ? 'glow-border-bride' : 'glow-border-groom';
-  
-  const tagColor = isFemale
-    ? 'bg-gradient-to-r from-pink-500 to-rose-600 text-white shadow-xs'
-    : 'bg-gradient-to-r from-amber-500 to-amber-700 text-slate-950 font-black shadow-xs';
-
-  const avatarBg = isFemale
-    ? 'bg-gradient-to-br from-rose-50 to-pink-100 text-rose-600 border-2 border-rose-300 shadow-rose-200'
-    : 'bg-gradient-to-br from-amber-50 to-amber-100 text-amber-700 border-2 border-amber-400 shadow-amber-200';
-
-  const cardInnerBg = isFemale
-    ? 'bg-gradient-to-b from-rose-50/40 via-white to-pink-50/20'
-    : 'bg-gradient-to-b from-amber-50/40 via-white to-slate-50/30';
-
-  const btnClass = isFemale
-    ? 'bg-gradient-to-r from-rose-700 to-pink-700 hover:from-rose-800 hover:to-pink-800 text-white shadow-rose-900/20'
-    : 'bg-gradient-to-r from-slate-900 to-slate-800 hover:from-amber-600 hover:to-amber-700 hover:text-slate-950 text-amber-400 shadow-slate-950/20';
 
   const handleQuickWhatsApp = (e) => {
     e.stopPropagation();
@@ -37,137 +17,130 @@ export default function ProfileCard({ profile, onViewDetail, isSaved, onToggleSa
   };
 
   return (
-    <div className={`glow-card ${cardBorderClass} shadow-md border border-slate-200/80`}>
+    <div className="bg-white rounded-2xl border border-[#dedfd9] hover:border-[#0f5132] shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between overflow-hidden group">
       
-      {/* Animated Rotating Light Beam Border */}
-      <div className={`glow-border-beam ${beamClass}`} />
-
-      {/* Card Inner Content */}
-      <div className={`glow-card-content ${cardInnerBg}`}>
+      {/* Top Card Body */}
+      <div className={`p-4 sm:p-5 ${isUrdu ? 'text-right' : 'text-left'}`}>
         
-        <div className={`p-4 sm:p-5 ${isUrdu ? 'text-right' : 'text-left'}`}>
-          
-          {/* Top Header Row with ID & Favorite Bookmark */}
-          <div className="flex justify-between items-center mb-3">
-            <div className="flex items-center gap-1.5">
-              <span className="text-[10px] sm:text-[11px] font-mono bg-white/95 text-slate-800 px-2 py-0.5 rounded-lg font-black border border-slate-200 shadow-xs">
-                #{profile.id}
-              </span>
-              <span className="inline-flex items-center gap-1 text-[10px] bg-emerald-50 text-emerald-700 font-bold px-2 py-0.5 rounded-md border border-emerald-200">
-                <ShieldCheck className="w-3 h-3 text-emerald-600" />
-                <span>{isUrdu ? "تصدیق شدہ" : "Verified"}</span>
-              </span>
-            </div>
-
-            <div className="flex items-center gap-1">
-              {/* Bookmark / Favorite Heart Button */}
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onToggleSave(profile);
-                }}
-                className={`p-1.5 rounded-full transition-all ${
-                  isSaved
-                    ? 'bg-rose-50 text-rose-600 border border-rose-200 scale-110'
-                    : 'bg-white/80 hover:bg-rose-50 text-slate-400 hover:text-rose-600 border border-slate-200'
-                }`}
-                title={isSaved ? "Saved in favorites" : "Save to favorites"}
-              >
-                <Heart className={`w-4 h-4 ${isSaved ? 'fill-rose-600 text-rose-600' : ''}`} />
-              </button>
-
-              {/* Gender Tag */}
-              <span className={`text-[10px] sm:text-[11px] font-bold px-2.5 py-0.5 rounded-full ${tagColor}`}>
-                {isFemale ? t.femaleTag : t.maleTag}
-              </span>
-            </div>
-          </div>
-
-          {/* Profile Picture / Avatar */}
-          <div className="relative w-20 h-20 sm:w-22 sm:h-22 mx-auto my-2 group-hover:scale-105 transition-transform duration-300">
-            {profile.photo ? (
-              <div className="w-full h-full rounded-full overflow-hidden border-3 border-amber-400 shadow-md">
-                <img
-                  src={profile.photo}
-                  alt={profile.name}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            ) : (
-              <div className={`w-full h-full rounded-full flex items-center justify-center shadow-md ${avatarBg}`}>
-                <User className="w-9 h-9 sm:w-10 sm:h-10" />
-              </div>
-            )}
-            {/* Verified Green badge */}
-            <span className="absolute bottom-0 right-0 w-4 h-4 bg-emerald-500 border-2 border-white rounded-full"></span>
-          </div>
-
-          {/* Name & Title */}
-          <h3 className="text-center font-black text-slate-900 text-sm sm:text-base mt-1">
-            {profile.name}
-          </h3>
-
-          {/* Age & Height */}
-          <p className="text-center font-bold text-slate-700 text-xs sm:text-sm mb-1">
-            {t.ageLabel} <span className="text-amber-700">{profile.age} {t.yearsLabel}</span> | {t.heightLabel} {profile.height || 'N/A'}
-          </p>
-
-          {/* Badge & Status chip */}
-          <div className="flex items-center justify-center gap-1.5 mb-2.5">
-            <span className="text-[10px] sm:text-[11px] text-rose-700 font-bold bg-rose-50 py-0.5 px-2.5 rounded-full border border-rose-200/80">
-              {profile.marital}
+        {/* Top Header Row with ID & Favorite Bookmark */}
+        <div className="flex justify-between items-center mb-3">
+          <div className="flex items-center gap-1.5">
+            <span className="text-[11px] font-mono bg-[#f8f6f1] text-[#20231f] px-2 py-0.5 rounded-md font-bold border border-[#dedfd9]">
+              #{profile.id}
             </span>
-            {profile.badge && (
-              <span className="text-[10px] sm:text-[11px] text-slate-800 font-bold bg-amber-100 py-0.5 px-2 rounded-full border border-amber-300">
-                {profile.badge}
-              </span>
-            )}
-          </div>
-          
-          {/* Attributes details list */}
-          <div className="space-y-1.5 text-[11px] sm:text-xs text-slate-700 border-t border-slate-200/70 pt-2.5 bg-white/70 p-2.5 rounded-xl border border-slate-100">
-            <div className="flex items-center justify-between">
-              <span className="text-slate-400 font-medium">{t.cityLabel}</span>
-              <span className="font-bold text-slate-900">{profile.city}</span>
-            </div>
-
-            <div className="flex items-center justify-between">
-              <span className="text-slate-400 font-medium">{t.casteLabel}</span>
-              <span className="font-black text-amber-700">{profile.caste}</span>
-            </div>
-
-            <div className="flex items-center justify-between">
-              <span className="text-slate-400 font-medium">{t.educationLabel}</span>
-              <span className="font-bold text-slate-900 truncate max-w-[150px] sm:max-w-[170px]">{profile.education}</span>
-            </div>
-
-            <div className="flex items-center justify-between">
-              <span className="text-slate-400 font-medium">{t.jobLabel}</span>
-              <span className="font-bold text-slate-900 truncate max-w-[150px] sm:max-w-[170px]">{profile.job || (isUrdu ? 'کوئی نہیں' : 'None')}</span>
-            </div>
+            <span className="inline-flex items-center gap-1 text-[11px] bg-[#edf4ef] text-[#0f5132] font-bold px-2 py-0.5 rounded-md border border-[#0f5132]/20">
+              <ShieldCheck className="w-3.5 h-3.5 text-[#0f5132]" />
+              <span>{isUrdu ? "تصدیق شدہ" : "Verified"}</span>
+            </span>
           </div>
 
+          <div className="flex items-center gap-1.5">
+            {/* Bookmark / Favorite Heart Button */}
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                onToggleSave(profile);
+              }}
+              className={`p-1.5 rounded-full transition-all ${
+                isSaved
+                  ? 'bg-rose-50 text-rose-600 border border-rose-200 scale-105'
+                  : 'bg-white hover:bg-slate-50 text-slate-400 hover:text-rose-600 border border-slate-200'
+              }`}
+              title={isSaved ? "Saved in favorites" : "Save to favorites"}
+            >
+              <Heart className={`w-4 h-4 ${isSaved ? 'fill-rose-600 text-rose-600' : ''}`} />
+            </button>
+
+            {/* Clean Gender Tag */}
+            <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-[#f8f6f1] text-[#063c2b] border border-[#dedfd9]">
+              {isFemale ? t.femaleTag : t.maleTag}
+            </span>
+          </div>
         </div>
 
-        {/* Action Footer Button with WhatsApp & View details */}
-        <div className="p-3 bg-white/95 border-t border-slate-100 mt-auto flex items-center gap-2">
-          <button
-            onClick={() => onViewDetail(profile)}
-            className={`flex-1 ${btnClass} font-bold py-2.5 rounded-xl text-xs sm:text-sm transition-all duration-300 flex items-center justify-center gap-1.5 shadow-md hover:scale-[1.01]`}
-          >
-            <Eye className="w-4 h-4" />
-            <span>{t.btnViewDetail}</span>
-          </button>
-
-          <button
-            onClick={handleQuickWhatsApp}
-            className="p-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm transition-all hover:scale-105"
-            title="Inquire on WhatsApp"
-          >
-            <MessageCircle className="w-4 h-4 fill-white text-emerald-600" />
-          </button>
+        {/* Profile Picture / Avatar */}
+        <div className="relative w-20 h-20 sm:w-22 sm:h-22 mx-auto my-2">
+          {profile.photo ? (
+            <div className="w-full h-full rounded-full overflow-hidden border-2 border-[#b89446] shadow-sm">
+              <img
+                src={profile.photo}
+                alt={profile.name}
+                className="w-full h-full object-cover"
+              />
+            </div>
+          ) : (
+            <div className="w-full h-full rounded-full flex items-center justify-center bg-[#f8f6f1] text-[#063c2b] border-2 border-[#b89446]/60 shadow-sm">
+              <User className="w-10 h-10" />
+            </div>
+          )}
+          {/* Active status dot */}
+          <span className="absolute bottom-0 right-0 w-4 h-4 bg-[#0f5132] border-2 border-white rounded-full"></span>
         </div>
 
+        {/* Name & Title */}
+        <h3 className="text-center font-black text-[#20231f] text-base mt-2">
+          {profile.name}
+        </h3>
+
+        {/* Age & Height */}
+        <p className="text-center font-bold text-[#626c65] text-xs sm:text-sm mb-2">
+          {t.ageLabel} <span className="text-[#063c2b] font-black">{profile.age} {t.yearsLabel}</span> | {t.heightLabel} {profile.height || 'N/A'}
+        </p>
+
+        {/* Status chip */}
+        <div className="flex items-center justify-center gap-1.5 mb-3">
+          <span className="text-[11px] text-[#20231f] font-bold bg-[#f8f6f1] py-0.5 px-2.5 rounded-md border border-[#dedfd9]">
+            {profile.marital}
+          </span>
+          {profile.badge && (
+            <span className="text-[11px] text-[#063c2b] font-bold bg-[#edf4ef] py-0.5 px-2 rounded-md border border-[#0f5132]/20">
+              {profile.badge}
+            </span>
+          )}
+        </div>
+        
+        {/* Attributes details list - Clean table layout */}
+        <div className="space-y-2 text-xs text-[#20231f] border-t border-[#dedfd9] pt-3">
+          <div className="flex items-center justify-between">
+            <span className="text-[#626c65] font-medium">{t.cityLabel}</span>
+            <span className="font-bold text-[#20231f]">{profile.city}</span>
+          </div>
+
+          <div className="flex items-center justify-between">
+            <span className="text-[#626c65] font-medium">{t.casteLabel}</span>
+            <span className="font-black text-[#063c2b]">{profile.caste}</span>
+          </div>
+
+          <div className="flex items-center justify-between">
+            <span className="text-[#626c65] font-medium">{t.educationLabel}</span>
+            <span className="font-bold text-[#20231f] truncate max-w-[150px] sm:max-w-[170px]">{profile.education}</span>
+          </div>
+
+          <div className="flex items-center justify-between">
+            <span className="text-[#626c65] font-medium">{t.jobLabel}</span>
+            <span className="font-bold text-[#20231f] truncate max-w-[150px] sm:max-w-[170px]">{profile.job || (isUrdu ? 'کوئی نہیں' : 'None')}</span>
+          </div>
+        </div>
+
+      </div>
+
+      {/* Action Footer Button with WhatsApp & View details */}
+      <div className="p-3 bg-[#fbfaf7] border-t border-[#dedfd9] mt-auto flex items-center gap-2">
+        <button
+          onClick={() => onViewDetail(profile)}
+          className="flex-1 bg-[#063c2b] hover:bg-[#04281c] text-white font-bold py-2.5 px-3 rounded-xl text-xs sm:text-sm transition-all flex items-center justify-center gap-1.5 shadow-sm cursor-pointer"
+        >
+          <Eye className="w-4 h-4 text-amber-300" />
+          <span>{t.btnViewDetail}</span>
+        </button>
+
+        <button
+          onClick={handleQuickWhatsApp}
+          className="p-2.5 rounded-xl bg-[#25D366] hover:bg-[#20ba59] text-white shadow-sm transition-all hover:scale-105 cursor-pointer"
+          title="Inquire on WhatsApp"
+        >
+          <MessageCircle className="w-4 h-4 fill-white text-[#25D366]" />
+        </button>
       </div>
 
     </div>
