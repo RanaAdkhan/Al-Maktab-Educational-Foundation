@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import InstallAppBanner from './components/InstallAppBanner';
 import MatrimonialHeader from './components/MatrimonialHeader';
+import AafaqHero from './components/AafaqHero';
+import AafaqLiveSnapshot from './components/AafaqLiveSnapshot';
 import HeroSearch from './components/HeroSearch';
-import StatsCounter from './components/StatsCounter';
-import IslamicGuidelines from './components/IslamicGuidelines';
+import AafaqServicesSection from './components/AafaqServicesSection';
+import AafaqSupportSection from './components/AafaqSupportSection';
 import CasteFilterSection from './components/CasteFilterSection';
 import ProfileCard from './components/ProfileCard';
 import ProposalRequestSection from './components/ProposalRequestSection';
 import FeeStructureSection from './components/FeeStructureSection';
+import IslamicGuidelines from './components/IslamicGuidelines';
 import HowItWorks from './components/HowItWorks';
 import AboutSection from './components/AboutSection';
-import WhyChooseMatrimonial from './components/WhyChooseMatrimonial';
 import TestimonialsSection from './components/TestimonialsSection';
 import FAQSection from './components/FAQSection';
 import MatrimonialFooter from './components/MatrimonialFooter';
@@ -19,7 +21,7 @@ import DetailModal from './components/DetailModal';
 import SavedProfilesDrawer from './components/SavedProfilesDrawer';
 import { defaultProfiles, ADMIN_PHONE } from './data/matrimonialData';
 import { translations } from './data/translations';
-import { Search, MessageCircle, Heart, UserPlus, RotateCcw } from 'lucide-react';
+import { Search, MessageCircle, Heart, UserPlus, RotateCcw, Sparkles } from 'lucide-react';
 
 export default function App() {
   const [lang, setLang] = useState('ur'); // 'ur' or 'en'
@@ -142,7 +144,7 @@ export default function App() {
   });
 
   return (
-    <div className={`min-h-screen bg-slate-50 flex flex-col overflow-x-hidden ${lang === 'ur' ? 'font-urdu' : 'font-sans'}`}>
+    <div className={`min-h-screen bg-[#f8f6f1] flex flex-col overflow-x-hidden ${lang === 'ur' ? 'font-urdu' : 'font-sans'}`}>
       
       {/* Top Mobile App Install Banner */}
       <InstallAppBanner lang={lang} />
@@ -159,8 +161,72 @@ export default function App() {
         onOpenSaved={() => setIsSavedDrawerOpen(true)}
       />
 
-      {/* Hero & Search by Caste / City */}
+      {/* Aafaq.pk Style Hero Section */}
       <div id="home">
+        <AafaqHero onOpenRegister={() => setIsRegisterOpen(true)} lang={lang} t={t} />
+      </div>
+
+      {/* Rishta Corner Main Section (Aafaq.pk Style Locked Layout) */}
+      <section className="aaf-section aaf-section--rishta">
+        <div className="aaf-container">
+          
+          <div className="aaf-rishta-panel">
+            
+            <header className="aaf-rishta-panel__header text-center sm:text-right">
+              <p className="aaf-preheader">
+                {lang === 'ur' ? 'بااعتماد خاندانی ادارہ' : 'Families Trust Us'}
+              </p>
+              <h2 className="aaf-heading">
+                {lang === 'ur' ? 'رشتہ کارنر (Rishta Corner)' : 'Rishta Corner'}
+              </h2>
+              <p className="aaf-rishta-panel__lead">
+                {lang === 'ur' ? 'سنتِ نبوی ﷺ کے مطابق تصدیق شدہ خاندانی رشتے' : 'Trusted Rishta introductions within noble families.'}
+              </p>
+              <p className="aaf-rishta-panel__history">
+                {lang === 'ur' ? (
+                  <>
+                    ہمارا سب سے مقبول اور باوقار شعبہ، جس کے ذریعے <strong>2014 سے اب تک ہزاروں رشتے</strong> طے پا چکے ہیں — اب مزید جدید اور تیز رفتار۔
+                  </>
+                ) : (
+                  <>
+                    Our most popular matrimonial service, with <strong>thousands of verified profiles</strong> since 2014.
+                  </>
+                )}
+              </p>
+            </header>
+
+            {/* Aafaq.pk Style Live Rishta Snapshot Carousel */}
+            <AafaqLiveSnapshot lang={lang} />
+
+            {/* Dual Action Buttons */}
+            <div className="aaf-rishta-actions">
+              <button
+                type="button"
+                onClick={() => {
+                  const elem = document.getElementById('search-panel');
+                  if (elem) elem.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className="aaf-rishta-button aaf-rishta-button--primary hover:opacity-95 transition-all cursor-pointer"
+              >
+                <span>{lang === 'ur' ? 'رشتے تلاش کریں (Review Rishtas)' : 'Review Rishtas'}</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setIsRegisterOpen(true)}
+                className="aaf-rishta-button aaf-rishta-button--secondary hover:bg-emerald-50 transition-all cursor-pointer"
+              >
+                <span>{lang === 'ur' ? 'نیا رشتہ رجسٹر کریں (Register a Rishta)' : 'Register a Rishta'}</span>
+              </button>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+      {/* Search by Caste, City & Gender Panel */}
+      <div id="search-panel">
         <HeroSearch
           genderFilter={genderFilter}
           setGenderFilter={setGenderFilter}
@@ -176,39 +242,23 @@ export default function App() {
         />
       </div>
 
-      {/* Live Verified Platform Stats Bar */}
-      <StatsCounter lang={lang} />
-
-      {/* Islamic Guidelines & Quranic Teachings on Nikah */}
-      <IslamicGuidelines lang={lang} t={t} />
-
-      {/* Caste / Baradari Quick Selector Section */}
-      <div id="castes">
-        <CasteFilterSection
-          selectedCaste={casteFilter}
-          onSelectCaste={handleSelectCaste}
-          lang={lang}
-          t={t}
-        />
-      </div>
-
       {/* Main Profiles Grid with Search Results */}
       <main id="profiles" className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-8 sm:py-12 flex-grow w-full">
         
         {/* Results Header Bar */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 pb-3 border-b border-slate-200 gap-3">
           <div>
-            <h3 className="text-lg sm:text-2xl font-black text-slate-900 flex items-center gap-2">
-              <Heart className="w-5 h-5 text-amber-500 fill-amber-500" />
+            <h3 className="text-lg sm:text-2xl font-black text-slate-900 flex items-center gap-2 font-serif">
+              <Heart className="w-5 h-5 text-emerald-800 fill-emerald-800" />
               <span>{t.availableProfilesHeading}</span>
-              <span className="text-[11px] sm:text-xs bg-slate-900 text-amber-400 px-3 py-0.5 rounded-full font-bold">
+              <span className="text-[11px] sm:text-xs bg-emerald-950 text-amber-400 px-3 py-0.5 rounded-full font-bold">
                 {filteredProfiles.length} {t.resultsCount}
               </span>
             </h3>
 
             {casteFilter && (
               <p className="text-[11px] sm:text-xs text-slate-600 mt-1 flex items-center gap-2">
-                <span>{t.selectedCasteLabel} <strong className="text-amber-700 font-black">{casteFilter}</strong></span>
+                <span>{t.selectedCasteLabel} <strong className="text-emerald-900 font-black">{casteFilter}</strong></span>
                 <button
                   onClick={() => setCasteFilter('')}
                   className="text-rose-600 underline font-bold"
@@ -244,7 +294,7 @@ export default function App() {
 
             <button
               onClick={() => setIsRegisterOpen(true)}
-              className="bg-slate-900 hover:bg-slate-800 text-amber-400 px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl text-[11px] sm:text-xs font-bold flex items-center gap-1.5 shadow-md"
+              className="bg-emerald-900 hover:bg-emerald-950 text-amber-300 px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl text-[11px] sm:text-xs font-bold flex items-center gap-1.5 shadow-md"
             >
               <UserPlus className="w-3.5 h-3.5" />
               <span>{t.btnRegister}</span>
@@ -274,7 +324,7 @@ export default function App() {
                   const elem = document.getElementById('form');
                   if (elem) elem.scrollIntoView({ behavior: 'smooth' });
                 }}
-                className="px-5 py-2.5 bg-slate-900 text-amber-400 rounded-xl text-xs font-bold shadow-md"
+                className="px-5 py-2.5 bg-emerald-900 text-amber-300 rounded-xl text-xs font-bold shadow-md"
               >
                 کوائف درج کروائیں (فیس: 5,000)
               </button>
@@ -298,6 +348,22 @@ export default function App() {
 
       </main>
 
+      {/* Aafaq.pk Style Vertical Service Rows (Stay Connected) */}
+      <AafaqServicesSection onOpenRegister={() => setIsRegisterOpen(true)} lang={lang} />
+
+      {/* Aafaq.pk Style Blood Bank & Trust & Privacy Section */}
+      <AafaqSupportSection lang={lang} />
+
+      {/* Caste / Baradari Quick Selector Section */}
+      <div id="castes">
+        <CasteFilterSection
+          selectedCaste={casteFilter}
+          onSelectCaste={handleSelectCaste}
+          lang={lang}
+          t={t}
+        />
+      </div>
+
       {/* Comprehensive Online Biodata Form Section (On-Page) */}
       <ProposalRequestSection
         onAddProfile={handleAddProfile}
@@ -312,6 +378,9 @@ export default function App() {
         t={t}
       />
 
+      {/* Islamic Guidelines & Quranic Teachings on Nikah */}
+      <IslamicGuidelines lang={lang} t={t} />
+
       {/* 3 Step Matrimonial Process */}
       <HowItWorks lang={lang} onOpenRegister={() => setIsRegisterOpen(true)} />
 
@@ -323,9 +392,6 @@ export default function App() {
           t={t}
         />
       </div>
-
-      {/* Why Choose Us */}
-      <WhyChooseMatrimonial lang={lang} t={t} />
 
       {/* Testimonials & Real Family Reviews */}
       <TestimonialsSection lang={lang} />
