@@ -6,13 +6,10 @@ export default function MatrimonialHeader({ onOpenRegister, onNavigate, activeTa
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navLinks = [
-    { id: 'home', label: t.navHome, icon: Home },
-    { id: 'profiles', label: t.navProfiles, icon: Search },
-    { id: 'castes', label: t.navCastes, icon: Users },
-    { id: 'form', label: t.navForm, icon: FileText },
-    { id: 'pricing', label: t.navPricing, icon: CreditCard },
-    { id: 'about', label: t.navAbout, icon: Info },
-    { id: 'contact', label: t.navContact, icon: MapPin },
+    { id: 'home', label: lang === 'ur' ? 'صفحۂ اول' : 'Home', icon: Home },
+    { id: 'profiles', label: lang === 'ur' ? 'رشتے تلاش کریں' : 'Find Matches', icon: Search },
+    { id: 'how-it-works', label: lang === 'ur' ? 'طریقہ کار' : 'How It Works', icon: FileText },
+    { id: 'contact', label: lang === 'ur' ? 'رابطہ و دفتر' : 'Contact Us', icon: MapPin },
   ];
 
   const handleNavClick = (id) => {

@@ -1,27 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import InstallAppBanner from './components/InstallAppBanner';
 import MatrimonialHeader from './components/MatrimonialHeader';
-import AafaqHero from './components/AafaqHero';
-import AafaqLiveSnapshot from './components/AafaqLiveSnapshot';
-import HeroSearch from './components/HeroSearch';
-import AafaqServicesSection from './components/AafaqServicesSection';
-import AafaqSupportSection from './components/AafaqSupportSection';
-import CasteFilterSection from './components/CasteFilterSection';
+import MatrimonialHero from './components/MatrimonialHero';
 import ProfileCard from './components/ProfileCard';
-import ProposalRequestSection from './components/ProposalRequestSection';
-import FeeStructureSection from './components/FeeStructureSection';
-import IslamicGuidelines from './components/IslamicGuidelines';
 import HowItWorks from './components/HowItWorks';
-import AboutSection from './components/AboutSection';
-import TestimonialsSection from './components/TestimonialsSection';
-import FAQSection from './components/FAQSection';
 import MatrimonialFooter from './components/MatrimonialFooter';
 import RegisterModal from './components/RegisterModal';
 import DetailModal from './components/DetailModal';
 import SavedProfilesDrawer from './components/SavedProfilesDrawer';
 import { defaultProfiles, ADMIN_PHONE } from './data/matrimonialData';
 import { translations } from './data/translations';
-import { Search, MessageCircle, Heart, UserPlus, RotateCcw, Sparkles } from 'lucide-react';
+import { Search, MessageCircle, Heart, UserPlus, RotateCcw, Sparkles, Filter, CheckCircle2, ShieldCheck, PhoneCall } from 'lucide-react';
 
 export default function App() {
   const [lang, setLang] = useState('ur'); // 'ur' or 'en'
@@ -127,14 +116,6 @@ export default function App() {
     setCasteFilter('');
   };
 
-  const handleSelectCaste = (casteName) => {
-    setCasteFilter(casteName);
-    const elem = document.getElementById('profiles');
-    if (elem) {
-      elem.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
   // Filter logic: filter by gender, city, caste
   const filteredProfiles = profiles.filter((p) => {
     const matchGender = genderFilter === 'all' || p.gender === genderFilter;
@@ -143,13 +124,16 @@ export default function App() {
     return matchGender && matchCity && matchCaste;
   });
 
+  const bridesCount = profiles.filter((p) => p.gender === 'عورت').length;
+  const groomsCount = profiles.filter((p) => p.gender === 'مرد').length;
+
   return (
     <div className={`min-h-screen bg-[#f8f6f1] flex flex-col overflow-x-hidden ${lang === 'ur' ? 'font-urdu' : 'font-sans'}`}>
       
       {/* Top Mobile App Install Banner */}
       <InstallAppBanner lang={lang} />
 
-      {/* Header with Language Switcher, Saved Profiles & Navigation */}
+      {/* Clean Navbar */}
       <MatrimonialHeader
         onOpenRegister={() => setIsRegisterOpen(true)}
         onNavigate={(tab) => setActiveTab(tab)}
@@ -161,73 +145,9 @@ export default function App() {
         onOpenSaved={() => setIsSavedDrawerOpen(true)}
       />
 
-      {/* Aafaq.pk Style Hero Section */}
+      {/* Focused Hero Section with Instant Search & Popular Caste Tags */}
       <div id="home">
-        <AafaqHero onOpenRegister={() => setIsRegisterOpen(true)} lang={lang} t={t} />
-      </div>
-
-      {/* Rishta Corner Main Section (Aafaq.pk Style Locked Layout) */}
-      <section className="aaf-section aaf-section--rishta">
-        <div className="aaf-container">
-          
-          <div className="aaf-rishta-panel">
-            
-            <header className="aaf-rishta-panel__header text-center sm:text-right">
-              <p className="aaf-preheader">
-                {lang === 'ur' ? 'بااعتماد خاندانی ادارہ' : 'Families Trust Us'}
-              </p>
-              <h2 className="aaf-heading">
-                {lang === 'ur' ? 'رشتہ کارنر (Rishta Corner)' : 'Rishta Corner'}
-              </h2>
-              <p className="aaf-rishta-panel__lead">
-                {lang === 'ur' ? 'سنتِ نبوی ﷺ کے مطابق تصدیق شدہ خاندانی رشتے' : 'Trusted Rishta introductions within noble families.'}
-              </p>
-              <p className="aaf-rishta-panel__history">
-                {lang === 'ur' ? (
-                  <>
-                    ہمارا سب سے مقبول اور باوقار شعبہ، جس کے ذریعے <strong>2014 سے اب تک ہزاروں رشتے</strong> طے پا چکے ہیں — اب مزید جدید اور تیز رفتار۔
-                  </>
-                ) : (
-                  <>
-                    Our most popular matrimonial service, with <strong>thousands of verified profiles</strong> since 2014.
-                  </>
-                )}
-              </p>
-            </header>
-
-            {/* Aafaq.pk Style Live Rishta Snapshot Carousel */}
-            <AafaqLiveSnapshot lang={lang} />
-
-            {/* Dual Action Buttons */}
-            <div className="aaf-rishta-actions">
-              <button
-                type="button"
-                onClick={() => {
-                  const elem = document.getElementById('search-panel');
-                  if (elem) elem.scrollIntoView({ behavior: 'smooth' });
-                }}
-                className="aaf-rishta-button aaf-rishta-button--primary hover:opacity-95 transition-all cursor-pointer"
-              >
-                <span>{lang === 'ur' ? 'رشتے تلاش کریں (Review Rishtas)' : 'Review Rishtas'}</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setIsRegisterOpen(true)}
-                className="aaf-rishta-button aaf-rishta-button--secondary hover:bg-emerald-50 transition-all cursor-pointer"
-              >
-                <span>{lang === 'ur' ? 'نیا رشتہ رجسٹر کریں (Register a Rishta)' : 'Register a Rishta'}</span>
-              </button>
-            </div>
-
-          </div>
-
-        </div>
-      </section>
-
-      {/* Search by Caste, City & Gender Panel */}
-      <div id="search-panel">
-        <HeroSearch
+        <MatrimonialHero
           genderFilter={genderFilter}
           setGenderFilter={setGenderFilter}
           cityFilter={cityFilter}
@@ -242,92 +162,139 @@ export default function App() {
         />
       </div>
 
-      {/* Main Profiles Grid with Search Results */}
+      {/* Main Rishta Profiles Grid (Right Below Hero) */}
       <main id="profiles" className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-8 sm:py-12 flex-grow w-full">
         
         {/* Results Header Bar */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 pb-3 border-b border-slate-200 gap-3">
+        <div className="flex flex-col md:flex-row md:items-center justify-between mb-6 pb-4 border-b border-slate-200 gap-4">
+          
           <div>
-            <h3 className="text-lg sm:text-2xl font-black text-slate-900 flex items-center gap-2 font-serif">
+            <div className="flex items-center gap-2">
               <Heart className="w-5 h-5 text-emerald-800 fill-emerald-800" />
-              <span>{t.availableProfilesHeading}</span>
-              <span className="text-[11px] sm:text-xs bg-emerald-950 text-amber-400 px-3 py-0.5 rounded-full font-bold">
-                {filteredProfiles.length} {t.resultsCount}
+              <h2 className="text-xl sm:text-2xl font-black text-slate-900 font-serif">
+                {lang === 'ur' ? 'دستیاب خاندانی رشتے' : 'Available Marriage Proposals'}
+              </h2>
+              <span className="text-xs bg-emerald-900 text-amber-300 px-2.5 py-0.5 rounded-full font-bold">
+                {filteredProfiles.length} {lang === 'ur' ? 'رشتے' : 'Matches'}
               </span>
-            </h3>
+            </div>
 
-            {casteFilter && (
-              <p className="text-[11px] sm:text-xs text-slate-600 mt-1 flex items-center gap-2">
-                <span>{t.selectedCasteLabel} <strong className="text-emerald-900 font-black">{casteFilter}</strong></span>
-                <button
-                  onClick={() => setCasteFilter('')}
-                  className="text-rose-600 underline font-bold"
-                >
-                  ({lang === 'ur' ? 'فلٹر ہٹائیں' : 'Clear'})
-                </button>
-              </p>
-            )}
+            {/* Active Filters Display */}
+            <div className="flex flex-wrap items-center gap-2 mt-2">
+              {casteFilter && (
+                <span className="inline-flex items-center gap-1.5 text-xs bg-amber-100 text-amber-900 font-bold px-2.5 py-1 rounded-lg border border-amber-300">
+                  <span>برادری: <strong>{casteFilter}</strong></span>
+                  <button
+                    onClick={() => setCasteFilter('')}
+                    className="text-rose-600 hover:text-rose-800 text-sm font-black ml-1"
+                    title="Remove Filter"
+                  >
+                    ×
+                  </button>
+                </span>
+              )}
 
-            {cityFilter && (
-              <p className="text-[11px] sm:text-xs text-slate-600 mt-0.5 flex items-center gap-2">
-                <span>شہر: <strong className="text-slate-800">{cityFilter}</strong></span>
+              {cityFilter && (
+                <span className="inline-flex items-center gap-1.5 text-xs bg-slate-200 text-slate-800 font-bold px-2.5 py-1 rounded-lg">
+                  <span>شہر: <strong>{cityFilter}</strong></span>
+                  <button
+                    onClick={() => setCityFilter('')}
+                    className="text-rose-600 hover:text-rose-800 text-sm font-black ml-1"
+                    title="Remove Filter"
+                  >
+                    ×
+                  </button>
+                </span>
+              )}
+
+              {(casteFilter || cityFilter || genderFilter !== 'all') && (
                 <button
-                  onClick={() => setCityFilter('')}
-                  className="text-rose-600 underline font-bold"
+                  onClick={handleResetFilters}
+                  className="text-xs text-rose-600 hover:underline font-bold flex items-center gap-1"
                 >
-                  ({lang === 'ur' ? 'فلٹر ہٹائیں' : 'Clear'})
+                  <RotateCcw className="w-3 h-3" />
+                  <span>{lang === 'ur' ? 'تمام فلٹرز ختم کریں' : 'Clear All'}</span>
                 </button>
-              </p>
-            )}
+              )}
+            </div>
           </div>
 
-          <div className="flex items-center gap-2 sm:gap-3">
-            {(casteFilter || cityFilter || genderFilter !== 'all') && (
-              <button
-                onClick={handleResetFilters}
-                className="text-[11px] sm:text-xs font-bold text-slate-600 hover:text-slate-900 flex items-center gap-1 bg-white border px-3 py-1.5 rounded-xl shadow-xs"
-              >
-                <RotateCcw className="w-3.5 h-3.5" />
-                <span>{t.btnReset}</span>
-              </button>
-            )}
+          {/* Quick Filter Tabs: All, Brides, Grooms */}
+          <div className="flex items-center gap-1.5 bg-slate-100 p-1 rounded-2xl border border-slate-200 self-start md:self-auto">
+            <button
+              onClick={() => setGenderFilter('all')}
+              className={`px-3 py-1.5 rounded-xl text-xs font-black transition-all cursor-pointer ${
+                genderFilter === 'all'
+                  ? 'bg-emerald-900 text-amber-300 shadow-sm'
+                  : 'text-slate-600 hover:text-slate-900'
+              }`}
+            >
+              {lang === 'ur' ? 'تمام رشتے' : 'All'} ({profiles.length})
+            </button>
 
             <button
-              onClick={() => setIsRegisterOpen(true)}
-              className="bg-emerald-900 hover:bg-emerald-950 text-amber-300 px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl text-[11px] sm:text-xs font-bold flex items-center gap-1.5 shadow-md"
+              onClick={() => setGenderFilter('عورت')}
+              className={`px-3 py-1.5 rounded-xl text-xs font-black transition-all cursor-pointer ${
+                genderFilter === 'عورت'
+                  ? 'bg-rose-700 text-white shadow-sm'
+                  : 'text-slate-600 hover:text-rose-700'
+              }`}
             >
-              <UserPlus className="w-3.5 h-3.5" />
-              <span>{t.btnRegister}</span>
+              👰 {lang === 'ur' ? 'دلہن (خواتین)' : 'Brides'} ({bridesCount})
+            </button>
+
+            <button
+              onClick={() => setGenderFilter('مرد')}
+              className={`px-3 py-1.5 rounded-xl text-xs font-black transition-all cursor-pointer ${
+                genderFilter === 'مرد'
+                  ? 'bg-emerald-900 text-white shadow-sm'
+                  : 'text-slate-600 hover:text-emerald-900'
+              }`}
+            >
+              🤵 {lang === 'ur' ? 'دلہا (مرد)' : 'Grooms'} ({groomsCount})
             </button>
           </div>
+
         </div>
 
         {/* Profiles Grid or No-Result View */}
         {filteredProfiles.length === 0 ? (
-          <div className="text-center py-12 sm:py-16 bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-sm">
-            <Search className="w-12 h-12 text-slate-300 mx-auto mb-3" />
-            <p className="text-lg sm:text-xl font-bold text-slate-800">
-              {casteFilter ? `برادری "${casteFilter}" کا فی الحال کوئی رشتہ لسٹ میں نہیں ہے۔` : t.noProfilesFound}
+          <div className="text-center py-12 sm:py-16 bg-white rounded-3xl border-2 border-dashed border-amber-300 p-6 sm:p-10 shadow-sm max-w-2xl mx-auto">
+            <Search className="w-12 h-12 text-amber-500 mx-auto mb-3" />
+            <h3 className="text-lg sm:text-xl font-black text-slate-900">
+              {casteFilter ? `برادری "${casteFilter}" کا رشتہ فی الحال لسٹ میں موجود نہیں ہے۔` : 'کوئی رشتہ نہیں ملا'}
+            </h3>
+            <p className="text-xs sm:text-sm text-slate-600 mt-2 leading-relaxed">
+              آپ پریشان نہ ہوں! آپ نیچے دیے گئے بٹن سے اپنے کوائف درج کروائیں یا واٹس ایپ پر رابطہ کریں۔ ہماری ٹیم آپ کی مطلوبہ برادری <strong>({casteFilter || 'برادری'})</strong> کا رشتہ خود تلاش کروا کر دے گی۔
             </p>
-            <p className="text-xs sm:text-sm text-slate-500 mt-1 max-w-md mx-auto">
-              آپ پریشان نہ ہوں! آپ نیچے دیے گئے فارم میں اپنے کوائف درج کروائیں، ہماری ٹیم خصوصی طور پر آپ کی مطلوبہ ذات ({casteFilter || 'برادری'}) کا رشتہ تلاش کر کے کروائے گی۔
-            </p>
-            <div className="flex items-center justify-center gap-3 mt-4">
+            <div className="mt-2 text-xs font-bold text-emerald-900 bg-emerald-50 py-1.5 px-3 rounded-lg inline-block border border-emerald-200">
+              سروس و رجسٹریشن فیس: صرف 5,000 روپے
+            </div>
+
+            <div className="flex flex-wrap items-center justify-center gap-3 mt-5">
               <button
                 onClick={handleResetFilters}
-                className="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-xl text-xs font-bold"
+                className="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-xl text-xs font-bold transition-all"
               >
-                {t.btnViewAll}
+                {lang === 'ur' ? 'تمام رشتے دیکھیں' : 'View All Profiles'}
               </button>
+
               <button
-                onClick={() => {
-                  const elem = document.getElementById('form');
-                  if (elem) elem.scrollIntoView({ behavior: 'smooth' });
-                }}
-                className="px-5 py-2.5 bg-emerald-900 text-amber-300 rounded-xl text-xs font-bold shadow-md"
+                onClick={() => setIsRegisterOpen(true)}
+                className="px-5 py-2.5 bg-emerald-900 hover:bg-emerald-950 text-amber-300 rounded-xl text-xs font-black shadow-md transition-all hover:scale-105"
               >
-                کوائف درج کروائیں (فیس: 5,000)
+                {lang === 'ur' ? 'کوائف درج کروائیں (فیس: 5,000)' : 'Register Profile (Rs. 5,000)'}
               </button>
+
+              <a
+                href={`https://wa.me/${ADMIN_PHONE}?text=${encodeURIComponent(`السلام علیکم! مجھے برادری "${casteFilter || 'مخصوص'}" کا رشتہ تلاش کروانا ہے۔ رہنمائی فرمائیں۔`)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold shadow-md transition-all flex items-center gap-1.5"
+              >
+                <MessageCircle className="w-4 h-4" />
+                <span>واٹس ایپ پر رشتہ مانگیں</span>
+              </a>
             </div>
           </div>
         ) : (
@@ -348,63 +315,57 @@ export default function App() {
 
       </main>
 
-      {/* Aafaq.pk Style Vertical Service Rows (Stay Connected) */}
-      <AafaqServicesSection onOpenRegister={() => setIsRegisterOpen(true)} lang={lang} />
-
-      {/* Aafaq.pk Style Blood Bank & Trust & Privacy Section */}
-      <AafaqSupportSection lang={lang} />
-
-      {/* Caste / Baradari Quick Selector Section */}
-      <div id="castes">
-        <CasteFilterSection
-          selectedCaste={casteFilter}
-          onSelectCaste={handleSelectCaste}
-          lang={lang}
-          t={t}
-        />
+      {/* 3 Step Process (How It Works) */}
+      <div id="how-it-works">
+        <HowItWorks lang={lang} onOpenRegister={() => setIsRegisterOpen(true)} />
       </div>
 
-      {/* Comprehensive Online Biodata Form Section (On-Page) */}
-      <ProposalRequestSection
-        onAddProfile={handleAddProfile}
-        lang={lang}
-        t={t}
-      />
+      {/* Action-Driven Call To Action Banner */}
+      <section className="bg-gradient-to-r from-emerald-950 via-slate-900 to-emerald-950 text-white py-12 px-4 border-t-2 border-b-2 border-amber-400">
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="inline-flex items-center gap-1.5 bg-amber-400/20 text-amber-300 px-3 py-1 rounded-full text-xs font-bold mb-3 border border-amber-300/30">
+            <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+            <span>{lang === 'ur' ? '100% شرعی و خاندانی اصول' : '100% Sunnah & Dignified Matches'}</span>
+          </div>
 
-      {/* 5,000 PKR Fee Structure & Matchmaking Package */}
-      <FeeStructureSection
-        onOpenRegister={() => setIsRegisterOpen(true)}
-        lang={lang}
-        t={t}
-      />
+          <h3 className="text-xl sm:text-3xl font-black text-white mb-2 leading-relaxed">
+            {lang === 'ur' ? 'کیا آپ کا یا آپ کے بچوں کا رشتہ مطلوب ہے؟' : 'Looking for an Ideal Marriage Proposal?'}
+          </h3>
 
-      {/* Islamic Guidelines & Quranic Teachings on Nikah */}
-      <IslamicGuidelines lang={lang} t={t} />
+          <p className="text-xs sm:text-sm text-slate-300 max-w-xl mx-auto mb-6 leading-relaxed">
+            {lang === 'ur'
+              ? 'المکتب ایجوکیشنل فاؤنڈیشن کے پاس تمام برادریوں اور کوالیفائیڈ خاندانوں کے تصدیق شدہ کوائف موجود ہیں۔ آج ہی اپنے کوائف درج کروائیں۔ رجسٹریشن فیس صرف 5,000 روپے ہے۔'
+              : 'Register your biodata today with complete privacy. Registration fee is only PKR 5,000.'}
+          </p>
 
-      {/* 3 Step Matrimonial Process */}
-      <HowItWorks lang={lang} onOpenRegister={() => setIsRegisterOpen(true)} />
+          <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
+            <button
+              onClick={() => setIsRegisterOpen(true)}
+              className="px-6 py-3.5 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-slate-950 font-black rounded-xl text-xs sm:text-sm shadow-xl hover:scale-105 transition-all flex items-center gap-2 cursor-pointer"
+            >
+              <UserPlus className="w-4 h-4" />
+              <span>{lang === 'ur' ? 'نیا رشتہ درج کروائیں (فیس: 5,000)' : 'Register Profile (Rs. 5,000)'}</span>
+            </button>
 
-      {/* About Us / Foundation Section */}
-      <div id="about">
-        <AboutSection
-          onOpenRegister={() => setIsRegisterOpen(true)}
-          lang={lang}
-          t={t}
-        />
-      </div>
+            <a
+              href={`https://wa.me/${ADMIN_PHONE}?text=${encodeURIComponent(lang === 'ur' ? 'السلام علیکم! مجھے ہمسفر رشتہ سنٹر میں کوائف درج کروانے اور فیس کے متعلق معلومات حاصل کرنی ہیں۔' : 'Hello! I need information about registration and fees.')}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-6 py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-xs sm:text-sm shadow-xl hover:scale-105 transition-all flex items-center gap-2"
+            >
+              <MessageCircle className="w-4 h-4 fill-white text-emerald-600" />
+              <span>{lang === 'ur' ? 'واٹس ایپ ہیلپ لائن: 0325 1013131' : 'WhatsApp Helpline'}</span>
+            </a>
+          </div>
+        </div>
+      </section>
 
-      {/* Testimonials & Real Family Reviews */}
-      <TestimonialsSection lang={lang} />
-
-      {/* FAQ Section */}
-      <FAQSection lang={lang} />
-
-      {/* Footer / Contact */}
+      {/* Footer */}
       <div id="contact">
         <MatrimonialFooter lang={lang} t={t} />
       </div>
 
-      {/* Comprehensive Registration Modal */}
+      {/* Registration Modal with Image Upload, Details & 5,000 Fee */}
       <RegisterModal
         isOpen={isRegisterOpen}
         onClose={() => setIsRegisterOpen(false)}
