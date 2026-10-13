@@ -4,7 +4,7 @@ export const translations = {
     parentOrg: "المکتب ایجوکیشنل فاؤنڈیشن کے زیرِ اہتمام",
     title: "ہمسفر رشتہ سنٹر",
     slogan: "زندگی کے سفر کا سچا ہمسفر",
-    tagline: "آپ مکمل کوائف درج کروائیں — ہم آپ کے لیے حسبِ منشا تصدیق شدہ رشتہ تلاش کر کے کروائیں گے",
+    tagline: "اپنی پسند اور خاندانی وقار کے عین مطابق رشتہ تلاش کریں",
     phone: "042 36307676",
     whatsapp: "+92 325 1013131",
     address: "64 مزنگ روڈ، ملک رحمت اللہ سٹریٹ، نزد صفاں والا چوک، بالمقابل پی ایس او پٹرول پمپ، لاہور",
@@ -15,13 +15,58 @@ export const translations = {
     
     // Nav
     navHome: "ہوم پیج",
+    navProfiles: "رشتے تلاش کریں (سرچ)",
+    navCastes: "برادری کے رشتے",
     navForm: "مکمل کوائف فارم",
-    navAbout: "تعارفِ ادارہ",
-    navCastes: "برادریاں و سروس",
     navPricing: "فیس و طریقہ کار",
+    navAbout: "تعارفِ ادارہ",
     navContact: "رابطہ و پتہ",
-    btnRegister: "مکمل کوائف درج کریں (فیس 5,000 روپے)",
+    btnRegister: "نیا رشتہ درج کریں (فیس 5,000 روپے)",
     btnHelpline: "ہیلپ لائن واٹس ایپ",
+
+    // Search Box
+    searchTitle: "اپنی پسند، برادری اور شہر کے مطابق رشتہ تلاش کریں",
+    searchSubtitle: "جس ذات، برادری یا شہر کا رشتہ درکار ہو، یہاں تلاش کریں یا نیچے برادری پر کلک کریں",
+    labelSearchFor: "تلاش برائے (جنس):",
+    allGenders: "تمام رشتے",
+    bride: "دلہن (خاتون)",
+    groom: "دولہا (مرد)",
+    labelCity: "شہر درج کریں:",
+    cityPlaceholder: "مثلاً لاہور، ملتان، اسلام آباد...",
+    labelCaste: "برادری / قوم / ذات:",
+    castePlaceholder: "مثلاً راجپوت، آرائیں، جٹ، سید، پٹھان...",
+    btnReset: "فلٹر صاف کریں",
+    filterAll: "تمام رشتے دیکھیں",
+    filterBridesOnly: "صرف دلہن (خواتین)",
+    filterGroomsOnly: "صرف دولہا (مرد)",
+
+    // Profiles Section
+    availableProfilesHeading: "دستیاب تصدیق شدہ رشتے",
+    resultsCount: "نتائج",
+    selectedCasteLabel: "منتخب برادری / ذات:",
+    noProfilesFound: "آپ کے درج کردہ فلٹر کے مطابق کوئی رشتہ نہیں ملا۔",
+    noProfilesAdvice: "براہ کرم برادری یا شہر کا نام تبدیل کر کے دیکھیں یا نیچے فارم میں اپنا مطلوبہ رشتہ درج کروائیں۔",
+    btnViewAll: "تمام رشتے دکھائیں",
+    btnViewDetail: "مکمل معلومات و رابطہ",
+
+    // Profile Card
+    ageLabel: "عمر:",
+    yearsLabel: "سال",
+    heightLabel: "قد:",
+    maritalStatusLabel: "ازدواجی حیثیت:",
+    cityLabel: "شہر:",
+    casteLabel: "برادری / ذات:",
+    educationLabel: "تعلیم:",
+    jobLabel: "پیشہ / روزگار:",
+    femaleTag: "عورت کا رشتہ",
+    maleTag: "مرد کا رشتہ",
+
+    // Castes Section
+    casteSectionTag: "برادری و قوم کے لحاظ سے تلاش",
+    casteSectionTitle: "اپنی برادری اور قوم کے مطابق رشتہ تلاش کریں",
+    casteSectionDesc: "جس برادری کا رشتہ درکار ہو، اس پر کلک کریں اور تصدیق شدہ کوائف دیکھیں۔",
+    availableRishtas: "دستیاب رشتے",
+    clearCasteFilter: "تمام برادریاں دوبارہ دکھائیں (فلٹر ہٹائیں)",
 
     // Hero Custom Match Section
     heroMainTitle: "حسبِ منشا شریکِ حیات کی تلاش و رشتہ سروس",
@@ -35,18 +80,11 @@ export const translations = {
     formSectionTitle: "امیدوار کے مکمل کوائف اور رشتہ کے تقاضے درج کریں",
     formSectionDesc: "تمام کوائف مکمل رازداری کے ساتھ محفوظ رکھے جاتے ہیں اور ان کے مطابق آپ کو رشتہ تلاش کر کے رابطہ کروایا جائے گا۔",
 
-    // Castes Section
-    casteSectionTag: "تمام برادریاں اور اقوام",
-    casteSectionTitle: "ہم ہر برادری اور قوم کے رشتے تلاش کر کے کرواتے ہیں",
-    casteSectionDesc: "اپنی برادری کا انتخاب کریں یا نیچے دیے گئے فارم میں اپنی قوم درج کریں، ہم مطلوبہ برادری میں رشتہ تلاش کر کے دیں گے۔",
-
     // Registration Modal / Form Fields
     regModalTitle: "امیدوار کا مکمل بائیو ڈیٹا اور شریکِ حیات کے تقاضے",
     regModalSubtitle: "رجسٹریشن و سروس فیس: 5,000 روپے (ایک بار قابلِ ادا) — تمام کوائف محفوظ اور پرائیویٹ رہتے ہیں",
     fullNameLabel: "امیدوار کا پورا نام: *",
     genderLabel: "جنس (امیدوار): *",
-    bride: "دلہن (خاتون)",
-    groom: "دولہا (مرد)",
     ageInputLabel: "عمر (سال): *",
     dobInputLabel: "تاریخِ پیدائش: ",
     heightInputLabel: "قد (مثلاً 5'5\"): *",
@@ -65,6 +103,14 @@ export const translations = {
     btnSubmitProfile: "کوائف جمع کروائیں اور واٹس ایپ پر بھیجیں",
     regSuccessHeading: "جزاک اللہ! کوائف کامیابی سے موصول ہو گئے",
     regSuccessDesc: "آپ کی تفصیلات ہمارے سسٹم میں محفوظ ہو چکی ہیں اور واٹس ایپ پر ایڈمن کو بھیج دی گئی ہیں۔ برائے مہربانی رجسٹریشن فیس (5,000 روپے) جمع کروا کر تصدیق فرمائیں تاکہ رشتہ تلاش کا عمل فوری شروع کیا جا سکے۔",
+
+    // Details Modal
+    detailsHeaderSubtitle: "پروفائل نمبر:",
+    eduJobTitle: "تعلیم اور روزگار",
+    familyBgTitle: "خاندانی بیک گراؤنڈ:",
+    partnerDemandsTitle: "شریکِ حیات کے تقاضے / ڈیمانڈ",
+    privacyNotice: "رازداری پالیسی کے تحت تصویر اور رابطہ نمبر صرف مخلص امیدواروں کو دیا جاتا ہے۔",
+    btnContactWhatsApp: "اس رشتے کے لیے رابطہ کریں (واٹس ایپ)",
 
     // Fee section
     feeSectionTitle: "شفاف سروس فیس اور طریقہ کار",
@@ -95,7 +141,7 @@ export const translations = {
     parentOrg: "Under the Auspices of Al-Maktab Educational Foundation",
     title: "Humsafar Rishta Centre",
     slogan: "Your Trusted Matrimonial Life Partner",
-    tagline: "Submit your complete biodata & requirements — we will find and arrange your verified proposal",
+    tagline: "Find your ideal life partner according to your family values and choice",
     phone: "042 36307676",
     whatsapp: "+92 325 1013131",
     address: "64 Mozang Road, Malik Rahmatullah Street, Near Safanwala Chowk, Opp. PSO Pump, Lahore",
@@ -106,13 +152,58 @@ export const translations = {
 
     // Nav
     navHome: "Home",
+    navProfiles: "Search Rishtey",
+    navCastes: "Browse Castes",
     navForm: "Biodata Form",
-    navAbout: "About Us",
-    navCastes: "Castes & Services",
     navPricing: "Fee & Process",
+    navAbout: "About Us",
     navContact: "Contact & Address",
-    btnRegister: "Submit Biodata (Fee: Rs. 5,000)",
+    btnRegister: "Register New Rishta (Fee: Rs. 5,000)",
     btnHelpline: "WhatsApp Helpline",
+
+    // Search Box
+    searchTitle: "Search Proposals by Caste, City & Preferences",
+    searchSubtitle: "Search by any caste, community or city to find verified matrimonial matches",
+    labelSearchFor: "Looking For (Gender):",
+    allGenders: "All Proposals",
+    bride: "Bride (Female)",
+    groom: "Groom (Male)",
+    labelCity: "Enter City:",
+    cityPlaceholder: "e.g. Lahore, Islamabad, Multan...",
+    labelCaste: "Caste / Baradari / Community:",
+    castePlaceholder: "e.g. Rajput, Arain, Jatt, Syed, Pathan...",
+    btnReset: "Reset Filters",
+    filterAll: "View All Proposals",
+    filterBridesOnly: "Brides Only",
+    filterGroomsOnly: "Grooms Only",
+
+    // Profiles Section
+    availableProfilesHeading: "Verified & Active Proposals",
+    resultsCount: "Results",
+    selectedCasteLabel: "Selected Caste:",
+    noProfilesFound: "No proposals found matching your search criteria.",
+    noProfilesAdvice: "Please try changing your caste or city search keywords, or submit your biodata below.",
+    btnViewAll: "View All Proposals",
+    btnViewDetail: "View Full Profile & Contact",
+
+    // Profile Card
+    ageLabel: "Age:",
+    yearsLabel: "Years",
+    heightLabel: "Height:",
+    maritalStatusLabel: "Marital Status:",
+    cityLabel: "City:",
+    casteLabel: "Caste / Community:",
+    educationLabel: "Education:",
+    jobLabel: "Profession / Job:",
+    femaleTag: "Bride Proposal",
+    maleTag: "Groom Proposal",
+
+    // Castes Section
+    casteSectionTag: "Search By Caste & Community",
+    casteSectionTitle: "Explore Proposals by Castes & Communities",
+    casteSectionDesc: "Click on any caste or community to instantly view verified matching profiles.",
+    availableRishtas: "Active Profiles",
+    clearCasteFilter: "Clear Caste Filter (View All)",
 
     // Hero Custom Match Section
     heroMainTitle: "Personalized Matrimonial Proposal & Matchmaking Service",
@@ -126,18 +217,11 @@ export const translations = {
     formSectionTitle: "Submit Candidate Details & Partner Requirements",
     formSectionDesc: "All submitted information is strictly confidential and used solely to match and coordinate verified family proposals.",
 
-    // Castes Section
-    casteSectionTag: "All Castes & Communities",
-    casteSectionTitle: "We Find Proposals Across All Communities & Castes",
-    casteSectionDesc: "Choose your caste or specify in the form below; our team will find proposals matching your preference.",
-
     // Registration Modal / Form Fields
     regModalTitle: "Candidate Comprehensive Biodata & Partner Demands",
     regModalSubtitle: "Registration & Service Fee: Rs. 5,000 (One-Time) — 100% Private & Confidential",
     fullNameLabel: "Candidate Full Name: *",
     genderLabel: "Gender (Candidate): *",
-    bride: "Bride (Female)",
-    groom: "Groom (Male)",
     ageInputLabel: "Age (Years): *",
     dobInputLabel: "Date of Birth: ",
     heightInputLabel: "Height (e.g. 5'5\"): *",
@@ -156,6 +240,14 @@ export const translations = {
     btnSubmitProfile: "Submit Biodata & Send on WhatsApp",
     regSuccessHeading: "Thank You! Biodata Received Successfully",
     regSuccessDesc: "Your details have been saved and sent to our admin on WhatsApp. Please pay the registration fee (Rs. 5,000) to initiate the custom matchmaking process immediately.",
+
+    // Details Modal
+    detailsHeaderSubtitle: "Profile ID:",
+    eduJobTitle: "Education & Profession",
+    familyBgTitle: "Family Background:",
+    partnerDemandsTitle: "Partner Requirements & Preferences",
+    privacyNotice: "As per privacy policy, contact numbers & photos are shared only with genuine verified candidates.",
+    btnContactWhatsApp: "Inquire for this Profile on WhatsApp",
 
     // Fee section
     feeSectionTitle: "Transparent Fee & Matchmaking Process",

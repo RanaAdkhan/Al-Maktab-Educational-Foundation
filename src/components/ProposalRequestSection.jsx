@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Send, ShieldCheck, Heart, CheckCircle2, Sparkles, Phone, AlertCircle } from 'lucide-react';
+import { Send, ShieldCheck, Heart, CheckCircle2, Sparkles, Phone, AlertCircle, Upload, Image, Trash2 } from 'lucide-react';
 import { ADMIN_PHONE, REGISTRATION_FEE } from '../data/matrimonialData';
 
 export default function ProposalRequestSection({ onAddProfile, lang, t }) {
@@ -25,11 +25,34 @@ export default function ProposalRequestSection({ onAddProfile, lang, t }) {
     guardianName: '',
     guardianRelation: isUrdu ? 'والد صاحب' : 'Father',
     contact: '',
-    demands: ''
+    demands: '',
+    photo: null
   });
 
+  const [photoPreview, setPhotoPreview] = useState(null);
   const [submitted, setSubmitted] = useState(false);
   const [whatsappMsgUrl, setWhatsappMsgUrl] = useState('');
+
+  const handlePhotoUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      if (file.size > 2 * 1024 * 1024) {
+        alert(isUrdu ? 'تصویر کا سائز 2MB سے کم ہونا چاہیے۔' : 'Photo size must be less than 2MB.');
+        return;
+      }
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPhotoPreview(reader.result);
+        setFormData((prev) => ({ ...prev, photo: reader.result }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleRemovePhoto = () => {
+    setPhotoPreview(null);
+    setFormData((prev) => ({ ...prev, photo: null }));
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -49,6 +72,7 @@ export default function ProposalRequestSection({ onAddProfile, lang, t }) {
 💼 *ملازمت / کاروبار:* ${formData.job} ${formData.income ? `(ماہانہ آمدنی: ${formData.income})` : ''}
 📍 *رہائش و شہر:* ${formData.city} ${formData.area ? `(${formData.area})` : ''} — ${formData.houseStatus}
 👨‍👩‍👧‍👦 *خاندانی تفصیلات:* ${formData.familyDetails || 'درج نہیں'}
+🖼️ *تصویر:* ${photoPreview ? 'فارم کے ساتھ تصویر منسلک ہے' : 'تصویر واٹس ایپ پر ارسال کی جائے گی'}
 -----------------------------------
 🎯 *مطلوبہ شریکِ حیات کے تقاضے (Demands):*
 ${formData.demands}
@@ -57,7 +81,7 @@ ${formData.demands}
 📱 *رابطہ نمبر:* ${formData.contact}
 💳 *رجسٹریشن فیس:* 5,000 روپے (ایک بار قابلِ ادا)
 -----------------------------------
-برائے مہربانی کوائف موصول فرما کر رشتہ تلاش اور رابطہ کا پراسیس شروع فرمائیں۔ جزاک اللہ!`
+برائے مہربانی کوائف موصول فرما کر رشتہ لائیو شامل کریں اور تلاش کا پراسیس شروع فرمائیں۔ جزاک اللہ!`
       : `*Hello Humsafar Rishta Centre (Al-Maktab Foundation)*
 *New Matrimonial Biodata & Requirements (Fee: Rs. 5,000)*
 -----------------------------------
@@ -72,6 +96,7 @@ ${formData.demands}
 💼 *Job / Profession:* ${formData.job} ${formData.income ? `(Monthly Income: ${formData.income})` : ''}
 📍 *City & Area:* ${formData.city} ${formData.area ? `(${formData.area})` : ''} — ${formData.houseStatus}
 👨‍👩‍👧‍👦 *Family Details:* ${formData.familyDetails || 'N/A'}
+🖼️ *Photo:* ${photoPreview ? 'Photo attached' : 'Will send photo via WhatsApp'}
 -----------------------------------
 🎯 *Partner Preferences & Demands:*
 ${formData.demands}
@@ -80,7 +105,7 @@ ${formData.demands}
 📱 *Contact / WhatsApp:* ${formData.contact}
 💳 *Registration Fee:* Rs. 5,000 (One-Time)
 -----------------------------------
-Please proceed with the custom matchmaking verification process. Thank you!`;
+Please proceed with adding to the live proposals and matchmaking. Thank you!`;
 
     const waUrl = `https://wa.me/${ADMIN_PHONE}?text=${encodeURIComponent(summaryText)}`;
     setWhatsappMsgUrl(waUrl);
@@ -91,7 +116,7 @@ Please proceed with the custom matchmaking verification process. Thank you!`;
         name: formData.name,
         gender: formData.gender,
         age: parseInt(formData.age) || 25,
-        height: formData.height,
+        height: formData.height || "5'4\"",
         marital: formData.marital,
         caste: formData.caste,
         sect: formData.sect,
@@ -99,7 +124,9 @@ Please proceed with the custom matchmaking verification process. Thank you!`;
         education: formData.education,
         job: formData.job,
         contact: formData.contact,
-        demands: formData.demands
+        demands: formData.demands,
+        familyStatus: formData.familyDetails,
+        photo: formData.photo || null
       });
     }
 
@@ -115,24 +142,26 @@ Please proceed with the custom matchmaking verification process. Thank you!`;
         <div className="text-center mb-10">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-100 text-amber-950 text-xs sm:text-sm font-bold mb-3 border border-amber-300">
             <Heart className="w-4 h-4 text-amber-600 fill-amber-600" />
-            <span>{t.formSectionTag}</span>
+            <span>{isUrdu ? "نیا رشتہ ایڈ کریں (آن لائن فارم)" : "Add Proposal Online Form"}</span>
           </div>
 
           <h3 className="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight leading-relaxed">
-            {t.formSectionTitle}
+            {isUrdu ? "نیا رشتہ ایڈ کرنے کا فارم مع تصویر" : "Submit New Matrimonial Biodata with Photo"}
           </h3>
           <p className="text-xs sm:text-sm text-slate-600 max-w-2xl mx-auto mt-1 leading-relaxed">
-            {t.formSectionDesc}
+            {isUrdu
+              ? "اس فارم کو پُر کر کے سبمٹ کریں۔ رشتہ فوراً اوپر لائیو ویب سائٹ پر ایڈ ہو جائے گا، جہاں اسے ذات اور شہر کے فلٹر سے سرچ کیا جا سکے گا۔"
+              : "Fill this form and submit. Your proposal will be instantly added live on the website and searchable by caste."}
           </p>
 
           {/* Fee Strip */}
           <div className="mt-4 inline-flex items-center gap-2 bg-slate-900 text-white px-4 py-2 rounded-2xl border-2 border-amber-400 shadow-md">
             <ShieldCheck className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400 shrink-0" />
             <span className="text-xs sm:text-sm font-bold">
-              {isUrdu ? "رجسٹریشن و رشتہ تلاش فیس:" : "Registration & Matchmaking Fee:"}
+              {isUrdu ? "رجسٹریشن و رشتہ تلاش فیس:" : "Registration Fee:"}
             </span>
             <span className="bg-amber-400 text-slate-950 px-2.5 py-0.5 rounded-lg text-xs sm:text-sm font-black font-sans">
-              Rs. 5,000/-
+              Rs. {REGISTRATION_FEE}/-
             </span>
             <span className="text-[10px] sm:text-xs text-amber-300">
               ({isUrdu ? "ایک بار قابلِ ادا" : "One-Time"})
@@ -146,14 +175,18 @@ Please proceed with the custom matchmaking verification process. Thank you!`;
           {submitted ? (
             <div className="py-10 text-center space-y-4">
               <CheckCircle2 className="w-16 h-16 text-emerald-600 mx-auto animate-bounce" />
-              <h4 className="text-2xl font-black text-slate-900">{t.regSuccessHeading}</h4>
+              <h4 className="text-2xl font-black text-slate-900">
+                {isUrdu ? "مبارک ہو! نیا رشتہ کامیابی سے لائیو ایڈ ہو گیا ہے" : "Proposal Added Successfully"}
+              </h4>
               <p className="text-xs sm:text-sm text-slate-600 max-w-lg mx-auto leading-relaxed">
-                {t.regSuccessDesc}
+                {isUrdu
+                  ? "آپ کا رشتہ اوپر لائیو لسٹنگ میں شامل ہو چکا ہے۔ اب کوئی بھی اس ذات کو سرچ کرے گا تو یہ رشتہ کارڈ پر نظر آئے گا۔"
+                  : "Your proposal is now added to the live listing and searchable by caste."}
               </p>
 
               <div className="bg-amber-100/70 p-4 rounded-2xl border border-amber-300 max-w-md mx-auto text-xs text-amber-950 space-y-1">
                 <p className="font-bold">
-                  💳 {isUrdu ? "فیس جمع کروانے کے طریقے:" : "Payment Methods (Rs. 5,000):"}
+                  💳 {isUrdu ? "فیس (5,000 روپے) جمع کروانے کے طریقے:" : "Payment Methods (Rs. 5,000):"}
                 </p>
                 <p>• JazzCash / EasyPaisa: <strong dir="ltr">0325 1013131</strong></p>
                 <p>• {isUrdu ? "مرکزی دفتر: 64 مزنگ روڈ، لاہور (بالمشافہ ملاقات)" : "Head Office: 64 Mozang Road, Lahore"}</p>
@@ -171,10 +204,14 @@ Please proceed with the custom matchmaking verification process. Thank you!`;
                 </a>
 
                 <button
-                  onClick={() => setSubmitted(false)}
+                  onClick={() => {
+                    setSubmitted(false);
+                    const elem = document.getElementById('profiles');
+                    if (elem) elem.scrollIntoView({ behavior: 'smooth' });
+                  }}
                   className="px-5 py-3 bg-slate-900 text-amber-400 font-bold rounded-xl text-xs sm:text-sm"
                 >
-                  {isUrdu ? "نیا فارم پُر کریں" : "Submit Another Biodata"}
+                  {isUrdu ? "لائیو رشتے دیکھیں" : "View Live Profiles"}
                 </button>
               </div>
             </div>
@@ -185,8 +222,56 @@ Please proceed with the custom matchmaking verification process. Thank you!`;
               <div className="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-sm">
                 <h4 className="font-black text-slate-900 text-sm mb-3 text-amber-800 flex items-center gap-1.5 border-b pb-2">
                   <Sparkles className="w-4 h-4 text-amber-600" />
-                  <span>1. {isUrdu ? "امیدوار کے ذاتی کوائف" : "Candidate Biodata"}</span>
+                  <span>1. {isUrdu ? "امیدوار کے ذاتی کوائف و تصویر" : "Candidate Biodata & Photo"}</span>
                 </h4>
+
+                {/* Photo Upload Box */}
+                <div className="mb-4 p-3 bg-slate-50 rounded-xl border-2 border-dashed border-amber-300 flex flex-col sm:flex-row items-center justify-between gap-3">
+                  <div className="flex items-center gap-3">
+                    {photoPreview ? (
+                      <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full overflow-hidden border-2 border-amber-400 shadow-md shrink-0">
+                        <img src={photoPreview} alt="Preview" className="w-full h-full object-cover" />
+                      </div>
+                    ) : (
+                      <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-amber-100 border-2 border-amber-300 flex items-center justify-center text-amber-700 shrink-0">
+                        <Image className="w-8 h-8" />
+                      </div>
+                    )}
+
+                    <div>
+                      <span className="font-bold text-slate-900 block text-xs sm:text-sm">
+                        {isUrdu ? "امیدوار کی تصویر اپلوڈ کریں (اختیاری):" : "Upload Candidate Photo (Optional):"}
+                      </span>
+                      <span className="text-[10px] sm:text-xs text-slate-500 block">
+                        {isUrdu ? "تصویر کارڈ پر شو ہوگی، آپ کے پاس تصویر نہ ہو تو واٹس ایپ پر بھی بھیج سکتے ہیں" : "Photo will be displayed on the profile card"}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    <label className="cursor-pointer bg-slate-900 hover:bg-slate-800 text-amber-400 px-3.5 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-sm">
+                      <Upload className="w-3.5 h-3.5" />
+                      <span>{isUrdu ? "تصویر منتخب کریں" : "Choose Photo"}</span>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={handlePhotoUpload}
+                        className="hidden"
+                      />
+                    </label>
+
+                    {photoPreview && (
+                      <button
+                        type="button"
+                        onClick={handleRemovePhoto}
+                        className="p-2 text-rose-600 hover:bg-rose-50 rounded-xl"
+                        title="Remove Photo"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    )}
+                  </div>
+                </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   <div className="sm:col-span-2">
@@ -283,10 +368,10 @@ Please proceed with the custom matchmaking verification process. Thank you!`;
                     <input
                       type="text"
                       required
-                      placeholder={isUrdu ? "راجپوت، آرائیں، جٹ، سید..." : "Rajput, Arain, Jatt"}
+                      placeholder={isUrdu ? "راجپوت، آرائیں، جٹ، سید، پٹھان..." : "Rajput, Arain, Jatt"}
                       value={formData.caste}
                       onChange={(e) => setFormData({ ...formData, caste: e.target.value })}
-                      className="w-full border border-slate-200 rounded-xl p-2.5 bg-slate-50 focus:ring-2 focus:ring-amber-500 outline-none"
+                      className="w-full border border-slate-200 rounded-xl p-2.5 bg-slate-50 focus:ring-2 focus:ring-amber-500 outline-none font-bold text-amber-800"
                     />
                   </div>
 
@@ -395,7 +480,7 @@ Please proceed with the custom matchmaking verification process. Thank you!`;
                 </h4>
                 <p className="text-[11px] text-slate-600 mb-2">
                   {isUrdu
-                    ? "شریکِ حیات کی مطلوبہ عمر، تعلیم، برادری (کیا صرف اپنی برادری یا کوئی بھی شریف برادری)، مسلک اور شہر تفصیل سے لکھیں تاکہ ہم آپ کی ترجیحات کے عین مطابق رشتہ تلاش کر سکیں:"
+                    ? "شریکِ حیات کی مطلوبہ عمر، تعلیم، برادری (کیا صرف اپنی برادری یا کوئی بھی شریف برادری)، مسلک اور شہر تفصیل سے لکھیں:"
                     : "Specify required partner age, education, caste preference, and city:"}
                 </p>
                 <textarea
@@ -453,7 +538,7 @@ Please proceed with the custom matchmaking verification process. Thank you!`;
                 className="w-full bg-gradient-to-r from-slate-900 via-amber-950 to-slate-900 hover:from-amber-600 hover:to-amber-700 text-amber-400 hover:text-slate-950 font-black py-4 rounded-2xl shadow-xl transition-all text-sm sm:text-base flex items-center justify-center gap-2 hover:scale-[1.01] active:scale-[0.99] border border-amber-400/40"
               >
                 <Send className="w-5 h-5" />
-                <span>{t.btnSubmitProfile}</span>
+                <span>{isUrdu ? "نیا رشتہ ایڈ کریں اور واٹس ایپ پر بھیجیں" : "Add Proposal Live & Send to WhatsApp"}</span>
               </button>
 
             </form>

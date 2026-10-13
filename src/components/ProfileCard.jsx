@@ -83,19 +83,34 @@ export default function ProfileCard({ profile, onViewDetail, isSaved, onToggleSa
             </div>
           </div>
 
-          {/* Privacy-Safe Avatar with Glow Ring */}
-          <div className="relative w-16 h-16 sm:w-18 sm:h-18 mx-auto my-2 group-hover:scale-110 transition-transform duration-300">
-            <div className={`w-full h-full rounded-full flex items-center justify-center shadow-md ${avatarBg}`}>
-              <User className="w-8 h-8 sm:w-9 sm:h-9" />
-            </div>
+          {/* Profile Picture / Avatar */}
+          <div className="relative w-20 h-20 sm:w-22 sm:h-22 mx-auto my-2 group-hover:scale-105 transition-transform duration-300">
+            {profile.photo ? (
+              <div className="w-full h-full rounded-full overflow-hidden border-3 border-amber-400 shadow-md">
+                <img
+                  src={profile.photo}
+                  alt={profile.name}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            ) : (
+              <div className={`w-full h-full rounded-full flex items-center justify-center shadow-md ${avatarBg}`}>
+                <User className="w-9 h-9 sm:w-10 sm:h-10" />
+              </div>
+            )}
             {/* Verified Green badge */}
             <span className="absolute bottom-0 right-0 w-4 h-4 bg-emerald-500 border-2 border-white rounded-full"></span>
           </div>
 
+          {/* Name & Title */}
+          <h3 className="text-center font-black text-slate-900 text-sm sm:text-base mt-1">
+            {profile.name}
+          </h3>
+
           {/* Age & Height */}
-          <h4 className="text-center font-extrabold text-slate-900 text-sm sm:text-base mt-1 mb-0.5">
+          <p className="text-center font-bold text-slate-700 text-xs sm:text-sm mb-1">
             {t.ageLabel} <span className="text-amber-700">{profile.age} {t.yearsLabel}</span> | {t.heightLabel} {profile.height || 'N/A'}
-          </h4>
+          </p>
 
           {/* Badge & Status chip */}
           <div className="flex items-center justify-center gap-1.5 mb-2.5">

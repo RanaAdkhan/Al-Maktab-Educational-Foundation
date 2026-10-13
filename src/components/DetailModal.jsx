@@ -11,8 +11,8 @@ export default function DetailModal({ isOpen, onClose, profile, lang, t }) {
 
   const whatsappMsg = encodeURIComponent(
     isUrdu
-      ? `السلام علیکم ہم سفر رشتہ سنٹر!\nمجھے پروفائل نمبر #${profile.id} (${profile.name} - ${profile.city}) کے رشتے میں دلچسپی ہے۔\nبراہِ مہربانی اس کے مزید خاندانی کوائف، فوٹو اور والدین کا رابطہ نمبر فراہم فرمائیں۔`
-      : `Hello Humsafar Rishta Centre!\nI am interested in Marriage Proposal ID #${profile.id} (${profile.name} - ${profile.city}).\nPlease provide verified family background and guardian contact details.`
+      ? `السلام علیکم ہم سفر رشتہ سنٹر!\nمجھے پروفائل نمبر #${profile.id} (${profile.name} - ${profile.caste} - ${profile.city}) کے رشتے میں دلچسپی ہے۔\nبراہِ مہربانی اس کے مزید خاندانی کوائف اور والدین کا رابطہ نمبر فراہم فرمائیں۔`
+      : `Hello Humsafar Rishta Centre!\nI am interested in Marriage Proposal ID #${profile.id} (${profile.name} - ${profile.caste} - ${profile.city}).\nPlease provide verified family background and guardian contact details.`
   );
 
   const whatsappUrl = `https://wa.me/${ADMIN_PHONE}?text=${whatsappMsg}`;
@@ -29,13 +29,19 @@ export default function DetailModal({ isOpen, onClose, profile, lang, t }) {
           <X className="w-5 h-5" />
         </button>
         
-        {/* Header with Avatar */}
+        {/* Header with Photo or Avatar */}
         <div className={`bg-gradient-to-r ${headerBg} text-white p-4 sm:p-6 text-center relative`}>
-          <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-1.5 sm:mb-2 bg-white/20 rounded-full flex items-center justify-center text-3xl shadow-inner border border-white/20">
-            <User className="w-8 h-8 sm:w-10 sm:h-10 text-white" />
+          <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-2 rounded-full overflow-hidden border-2 border-white/50 shadow-lg flex items-center justify-center bg-white/20">
+            {profile.photo ? (
+              <img src={profile.photo} alt={profile.name} className="w-full h-full object-cover" />
+            ) : (
+              <User className="w-10 h-10 sm:w-12 sm:h-12 text-white" />
+            )}
           </div>
           <h4 className="text-lg sm:text-xl font-bold">{profile.name}</h4>
-          <p className="text-[11px] sm:text-xs text-amber-300 mt-0.5">{t.detailsHeaderSubtitle} #{profile.id} ({profile.gender})</p>
+          <p className="text-[11px] sm:text-xs text-amber-300 mt-0.5">
+            {t.detailsHeaderSubtitle} #{profile.id} ({profile.gender}) • {profile.caste}
+          </p>
         </div>
 
         {/* Body Content */}
@@ -48,7 +54,7 @@ export default function DetailModal({ isOpen, onClose, profile, lang, t }) {
             <p><strong>{t.heightLabel}</strong> <span className="text-slate-700">{profile.height}</span></p>
             <p><strong>{t.maritalStatusLabel}</strong> <span className="text-slate-700">{profile.marital}</span></p>
             <p><strong>{t.cityLabel}</strong> <span className="text-slate-700">{profile.city}</span></p>
-            <p><strong>{t.casteLabel}</strong> <span className="text-slate-700">{profile.caste}</span></p>
+            <p><strong>{t.casteLabel}</strong> <span className="text-slate-700 font-bold text-amber-700">{profile.caste}</span></p>
           </div>
 
           {/* Education & Job */}
