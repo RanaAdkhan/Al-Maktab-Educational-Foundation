@@ -1,25 +1,22 @@
 import React, { useState } from 'react';
-import { UserPlus, MessageCircle, PhoneCall, Menu, X, Home, Search, Heart, Languages, FileText, MapPin } from 'lucide-react';
+import { UserPlus, MessageCircle, PhoneCall, Menu, X, Home, Search, Heart, Languages, Info, MapPin } from 'lucide-react';
 import { siteConfig, ADMIN_PHONE, LANDLINE_PHONE } from '../data/matrimonialData';
 
-export default function MatrimonialHeader({ onOpenRegister, onNavigate, activeTab, lang, onToggleLang, t, savedCount, onOpenSaved }) {
+export default function MatrimonialHeader({ onNavigate, activeTab, lang, onToggleLang, t, savedCount, onOpenSaved }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navLinks = [
     { id: 'home', label: lang === 'ur' ? 'صفحۂ اول' : 'Home', icon: Home },
-    { id: 'profiles', label: lang === 'ur' ? 'رشتے تلاش کریں' : 'Find Matches', icon: Search },
-    { id: 'how-it-works', label: lang === 'ur' ? 'طریقہ کار' : 'How It Works', icon: FileText },
-    { id: 'contact', label: lang === 'ur' ? 'رابطہ و دفتر' : 'Contact Us', icon: MapPin },
+    { id: 'browse', label: lang === 'ur' ? 'رشتے تلاش کریں' : 'Review Rishtas', icon: Search },
+    { id: 'register', label: lang === 'ur' ? 'رشتہ رجسٹر کریں' : 'Register a Rishta', icon: UserPlus },
+    { id: 'about', label: lang === 'ur' ? 'ہمارے بارے میں' : 'About Us', icon: Info },
+    { id: 'contact', label: lang === 'ur' ? 'رابطہ' : 'Contact', icon: MapPin },
   ];
 
   const handleNavClick = (id) => {
     onNavigate(id);
     setMobileMenuOpen(false);
-
-    const elem = document.getElementById(id);
-    if (elem) {
-      elem.scrollIntoView({ behavior: 'smooth' });
-    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
@@ -54,12 +51,13 @@ export default function MatrimonialHeader({ onOpenRegister, onNavigate, activeTa
           <nav className="hidden lg:flex items-center gap-6">
             {navLinks.map((link) => {
               const Icon = link.icon;
+              const isActive = activeTab === link.id;
               return (
                 <button
                   key={link.id}
                   onClick={() => handleNavClick(link.id)}
-                  className={`text-xs sm:text-sm font-bold flex items-center gap-1.5 transition-colors cursor-pointer ${
-                    activeTab === link.id
+                  className={`text-xs sm:text-sm font-bold flex items-center gap-1.5 transition-colors cursor-pointer py-1 ${
+                    isActive
                       ? 'text-[#063c2b] border-b-2 border-[#063c2b] pb-0.5'
                       : 'text-[#626c65] hover:text-[#063c2b]'
                   }`}
@@ -113,8 +111,12 @@ export default function MatrimonialHeader({ onOpenRegister, onNavigate, activeTa
 
             {/* Register Profile Button */}
             <button
-              onClick={onOpenRegister}
-              className="bg-[#063c2b] hover:bg-[#04281c] text-white font-bold px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg text-xs sm:text-sm flex items-center gap-1.5 shadow-xs transition-all cursor-pointer"
+              onClick={() => handleNavClick('register')}
+              className={`font-bold px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg text-xs sm:text-sm flex items-center gap-1.5 shadow-xs transition-all cursor-pointer ${
+                activeTab === 'register'
+                  ? 'bg-[#04281c] text-white ring-2 ring-[#b89446]'
+                  : 'bg-[#063c2b] hover:bg-[#04281c] text-white'
+              }`}
             >
               <UserPlus className="w-3.5 h-3.5 text-[#b89446]" />
               <span>{lang === 'ur' ? 'نیا رشتہ (فیس 5,000)' : 'Register (Rs. 5k)'}</span>
@@ -138,11 +140,16 @@ export default function MatrimonialHeader({ onOpenRegister, onNavigate, activeTa
         <div className={`lg:hidden bg-white border-t border-[#dedfd9] px-4 pt-3 pb-6 space-y-2 ${lang === 'ur' ? 'text-right' : 'text-left'}`}>
           {navLinks.map((link) => {
             const Icon = link.icon;
+            const isActive = activeTab === link.id;
             return (
               <button
                 key={link.id}
                 onClick={() => handleNavClick(link.id)}
-                className="w-full flex items-center justify-between p-2.5 rounded-lg text-xs sm:text-sm font-bold text-[#20231f] hover:bg-[#f8f6f1] transition-colors"
+                className={`w-full flex items-center justify-between p-2.5 rounded-lg text-xs sm:text-sm font-bold transition-colors ${
+                  isActive
+                    ? 'bg-[#edf4ef] text-[#063c2b] font-black'
+                    : 'text-[#20231f] hover:bg-[#f8f6f1]'
+                }`}
               >
                 <span>{link.label}</span>
                 <Icon className="w-4 h-4 text-[#063c2b]" />

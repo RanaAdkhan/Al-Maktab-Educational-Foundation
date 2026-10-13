@@ -2,7 +2,7 @@ import React from 'react';
 import { UserPlus, Search, ShieldCheck } from 'lucide-react';
 import AafaqLiveSnapshot from './AafaqLiveSnapshot';
 
-export default function AafaqHero({ onOpenRegister, lang, t }) {
+export default function AafaqHero({ onOpenRegister, onNavigate, lang, t }) {
   const isUrdu = lang === 'ur';
 
   const handleScrollToSearch = () => {
@@ -46,18 +46,18 @@ export default function AafaqHero({ onOpenRegister, lang, t }) {
           {/* Quick Dual Action Buttons */}
           <div className="flex flex-wrap items-center gap-3 mt-6">
             <button
-              onClick={handleScrollToSearch}
-              className="px-6 py-3.5 bg-emerald-900 hover:bg-emerald-950 text-white font-bold rounded-xl text-xs sm:text-sm flex items-center gap-2 shadow-md hover:scale-105 transition-all"
+              onClick={() => onNavigate ? onNavigate('browse') : handleScrollToSearch()}
+              className="px-6 py-3.5 bg-[#063c2b] hover:bg-[#04281c] text-white font-bold rounded-xl text-xs sm:text-sm flex items-center gap-2 shadow-md hover:scale-105 transition-all cursor-pointer"
             >
-              <Search className="w-4 h-4 text-amber-400" />
+              <Search className="w-4 h-4 text-[#b89446]" />
               <span>{isUrdu ? "رشتے تلاش کریں (Review Rishtas)" : "Review Rishtas"}</span>
             </button>
 
             <button
-              onClick={onOpenRegister}
-              className="px-6 py-3.5 bg-white hover:bg-emerald-50 text-emerald-900 border-2 border-emerald-900 font-bold rounded-xl text-xs sm:text-sm flex items-center gap-2 transition-all hover:scale-105 shadow-xs"
+              onClick={() => onNavigate ? onNavigate('register') : onOpenRegister()}
+              className="px-6 py-3.5 bg-white hover:bg-[#edf4ef] text-[#063c2b] border-2 border-[#063c2b] font-bold rounded-xl text-xs sm:text-sm flex items-center gap-2 transition-all hover:scale-105 shadow-xs cursor-pointer"
             >
-              <UserPlus className="w-4 h-4 text-emerald-800" />
+              <UserPlus className="w-4 h-4 text-[#063c2b]" />
               <span>{isUrdu ? "نیا رشتہ درج کریں (فیس 5,000)" : "Register a Rishta"}</span>
             </button>
           </div>
